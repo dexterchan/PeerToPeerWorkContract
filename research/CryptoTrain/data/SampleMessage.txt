@@ -1,1 +1,9 @@
 paying USD1000 to boar
+
+ECB versus CBC Mode AES encryption
+
+The Advanced Encryption Standard (AES), is a block cipher adopted as an encryption standard by the U.S. government for military and government use.
+
+ECB (Electronic Codebook) is essentially the first generation of the AES. It is the most basic form of block cipher encryption.
+
+CBC (Cipher Blocker Chaining) is an advanced form of block cipher encryption. With CBC mode encryption, each ciphertext block is dependent on all plaintext blocks processed up to that point. This adds an extra level of complexity to the encrypted data.
