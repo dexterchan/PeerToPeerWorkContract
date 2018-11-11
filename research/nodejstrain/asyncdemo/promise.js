@@ -3,11 +3,14 @@ const p = new Promise(
         //Kick off async work
         console.log("reading a user from db...");
         setTimeout(()=>{
-            //resolve (1); //pending state -> resolved, fulfilled state
-            reject(new Error("Fail retrieval")); //pending state->rejected state
+            try{
+                //resolve (1); //pending state -> resolved, fulfilled state
+                throw new Error("Fail retrieval");
+            }catch(err){
+                reject(err); //pending state->rejected state
+            }finally{}
+            
         },2000);
-       
-        //reject(new Error("message"));
     }
 );
 
