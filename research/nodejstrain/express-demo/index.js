@@ -1,8 +1,12 @@
 const express=require("express");
 const app=express();
 const Joi = require('joi');
-
+const logger = require("./logger");
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));//key1=value1&key2=value2
+app.use(express.static("public")); //static page
+//custom middleware
+app.use( logger);
 
 const courses = [
     {id:1, name:"course1"},
