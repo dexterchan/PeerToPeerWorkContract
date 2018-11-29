@@ -20,6 +20,7 @@ async function displayCommits(){
   }
 }
 displayCommits();
+console.log('After async');
 
 
 

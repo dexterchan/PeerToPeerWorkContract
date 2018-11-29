@@ -4,23 +4,29 @@ const zlib = require('zlib');
 
 class CipherWrapper{
     
-    constructor(algorithm,password){
-        if(algorithm.length==0)
-            this.algorithm="aes-256-cbc";
+    constructor(cipheralgorithm,key){
+        if(cipheralgorithm.length==0)
+            this.cipheralgorithm="aes-256-cbc";
         else
-            this.algorithm=algorithm;
-        this.password=password;
+            this.cipheralgorithm=cipheralgorithm;
+        this.key=key;
         this.srccoding="utf8";
         this.encryptcoding="hex";
 
     }
 
     createMyCipher(){
-        const cipher = crypto.createCipher(this.algorithm, this.password);
+        if(!this.key){
+            throw new Error("No key defined for cipher");
+        }
+        const cipher = crypto.createCipher(this.cipheralgorithm, this.key);
         return cipher;
     }
     createMyDecipher(){
-        const decipher = crypto.createDecipher(this.algorithm,this.password);
+        if(!this.key){
+            throw new Error("No key defined for decipher");
+        }
+        const decipher = crypto.createDecipher(this.cipheralgorithm,this.key);
         return decipher;
     }
 
