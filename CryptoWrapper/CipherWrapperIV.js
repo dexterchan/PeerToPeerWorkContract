@@ -4,31 +4,46 @@ const zlib = require('zlib');
 
 class CipherWrapper{
     
-    constructor(cipheralgorithm,key){
+
+
+    constructor(cipheralgorithm,key,IV){
         if(cipheralgorithm.length==0)
             this.cipheralgorithm="aes-256-cbc";
         else
             this.cipheralgorithm=cipheralgorithm;
-        this.key=key;
+        
+        const bufferKey = Buffer.alloc(32);
+
+        this.key=Buffer.concat([Buffer.from(key)], bufferKey.length);
         this.srccoding="utf8";
         this.encryptcoding="hex";
         this.blockSize=256;
+        /*
+        if(IV==undefined)
+            
+        else*/
+        
+        if(IV)
+            this.IV=IV;
+        else
+            this.IV=this.generateIV(16);
     }
 
     createMyCipher(){
         if(!this.key){
             throw new Error("No key defined for cipher");
         }
-        const cipher = crypto.createCipher(this.cipheralgorithm, this.key);
+        const cipher = crypto.createCipheriv(this.cipheralgorithm, this.key,this.IV);
         return cipher;
     }
     createMyDecipher(){
         if(!this.key){
-            throw new Error("No key defined for decipher");
+            throw new Error("No key defined for cipher");
         }
-        const decipher = crypto.createDecipher(this.cipheralgorithm,this.key);
+        const decipher = crypto.createDecipheriv(this.cipheralgorithm, this.key,this.IV);
         return decipher;
     }
+
 
     encryptText(text){
         const cipher = this.createMyCipher();
@@ -51,6 +66,7 @@ class CipherWrapper{
         const cipher = this.createMyCipher();
 
         return inputStream.pipe(zip).pipe(cipher);
+        //return inputStream.pipe(cipher);
     }
     encryptFile(inputfilename,outputfilename){
         // input file
@@ -64,6 +80,7 @@ class CipherWrapper{
         const unzip = zlib.createGunzip();
         const decipher = this.createMyDecipher();
         return inputStream.pipe(decipher).pipe(unzip);
+        //return inputStream.pipe(decipher);
     }
     decryptFile(inputfilename,outputfilename){
         // input file

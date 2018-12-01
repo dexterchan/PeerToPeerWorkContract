@@ -4,7 +4,7 @@ const fs = require("fs");
 class PkeyCipherWrapper extends CipherWrapper{
     
     constructor(cipher_algorithm,hash_algorithm){
-        super(cipher_algorithm,"")
+        super(cipher_algorithm,"");
         this.signAlgorithm=hash_algorithm;
         
         this.RSAAsyncSize=100;
@@ -29,6 +29,12 @@ class PkeyCipherWrapper extends CipherWrapper{
         }
     }
 
+    setPrivateKey(key){
+        this.key=key;
+    }
+    setPublicKey(pub){
+        this.pub=pub;
+    }
     ReadSyncPemFile(pemFile){
         try{
             const pem=fs.readFileSync(pemFile);
@@ -99,6 +105,6 @@ class PkeyCipherWrapper extends CipherWrapper{
     }
     
     
-};
+}
 
 module.exports=PkeyCipherWrapper;

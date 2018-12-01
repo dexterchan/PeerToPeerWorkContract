@@ -1,9 +1,11 @@
 const assert = require("assert");
 const debugAll = require("debug")("app:dumpall");
+const debug = require("debug")("app:debug");
 const path=require("path");
 const fs = require("fs");
 const CipherWrapperClass = require("../../../CryptoWrapper/CipherWrapper");
 const pkeyCipherWrapperClass = require("../../../CryptoWrapper/PkeyCipherWrapper");
+const CipherIVWrapperClass = require("../../../CryptoWrapper/CipherWrapperIV");
 let cipher;
 let pkcipher;
 
@@ -15,32 +17,42 @@ const certFile = "./keys/egg.certificate.pem";
 
 beforeEach(
     ()=>{
-        cipher = new CipherWrapperClass(cipheralgorithm,password);
+        //cipher = new CipherWrapperClass(cipheralgorithm,password);
         pkcipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
+        cipherIV = new CipherIVWrapperClass (cipheralgorithm,password);
         pkcipher.ReadSyncPemFile(permFile);
         pkcipher.ReadSyncCertFile(certFile);
     }
 );
 
 describe("Test Cipher",()=>{
-        it("test cipher text",()=>{
+        it("test cipher IV text",()=>{
             const message = "How are you?";
-            const __crypted=cipher.encryptText(message);
-            const de_msg=cipher.decryptText(__crypted);
+
+            const IV = cipherIV.IV;
+            debugAll("Cipher IV:"+IV.toString("hex"));
+
+            const __crypted=cipherIV.encryptText(message);
+            const __decrypter = new CipherIVWrapperClass (cipheralgorithm,password,IV);
+
+            const de_msg=__decrypter.decryptText(__crypted);
             
             assert.equal(message,de_msg);
         });
+        
         it("test encrypt cipher file",()=>{
             const inputfilename="./data/SampleMessage.txt";
             const outputfilename=inputfilename+".encrypted";
             const decryptfilename=inputfilename+".decrypted";
-
-            cipher.encryptFile(inputfilename,outputfilename).on('close', ()=> {
-                cipher.decryptFile(outputfilename,decryptfilename);
+            const IV = cipherIV.IV;
+            cipherIV.encryptFile(inputfilename,outputfilename).on('close', ()=> {
+                const __decrypter = new CipherIVWrapperClass (cipheralgorithm,password,IV);
+                __decrypter.decryptFile(outputfilename,decryptfilename);
             });
             val=(compareFiles(inputfilename,decryptfilename));
             assert(val);
         });
+        
         it("test sync read pem file",()=>{
             var pathObj=path.parse(__dirname);
             
@@ -78,7 +90,8 @@ describe("Test Cipher",()=>{
             const inputText=fs.readFileSync(inputfilename);
             //generate a new symmetric key and encrypt msg
             const symKey = pkcipher.generateRandomKey();
-            const mycipher= new CipherWrapperClass(cipheralgorithm,symKey);
+            const mycipher= new CipherIVWrapperClass(cipheralgorithm,symKey);
+            const IV = mycipher.IV;
             cipherText = mycipher.encryptText(inputText);
 
             //sym key encrypt by public key
@@ -90,7 +103,7 @@ describe("Test Cipher",()=>{
             
             //sym key decrypt by private key
             const decryptedKey = pkcipher.privateDecryptHex(transferedCipher);
-            const mydecipher= new CipherWrapperClass(cipheralgorithm,decryptedKey);
+            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
             //decrypted symkey decrypt cipher text
             const decruptedText=mydecipher.decryptText(cipherText);
             assert (symKey==decryptedKey);
@@ -104,7 +117,8 @@ describe("Test Cipher",()=>{
 
             //generate a new symmetric key and encrypt msg
             const symKey = pkcipher.generateRandomKey();
-            const mycipher= new CipherWrapperClass(cipheralgorithm,symKey);
+            const mycipher= new CipherIVWrapperClass(cipheralgorithm,symKey);
+            const IV = mycipher.IV;
             cipherText = mycipher.encryptText(inputText);
 
             //sym key encrypt by private key
@@ -116,7 +130,7 @@ describe("Test Cipher",()=>{
 
             //sym key decrypt by public key
             const decryptedKey = pkcipher.publicDecryptHex(transferedCipher);
-            const mydecipher= new CipherWrapperClass(cipheralgorithm,decryptedKey);
+            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
             
             //decrypted symkey decrypt cipher text
             const decruptedText=mydecipher.decryptText(cipherText);
