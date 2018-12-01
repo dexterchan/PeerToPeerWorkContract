@@ -12,7 +12,24 @@ class CipherWrapper{
         this.key=key;
         this.srccoding="utf8";
         this.encryptcoding="hex";
+        this.blockSize=256;
+    }
 
+    createMyCipherIV(){
+        if(!this.key){
+            throw new Error("No key defined for cipher");
+        }
+        const IV=generateIV(this.blockSize);
+        const cipher = crypto.createCipheriv(this.cipheralgorithm, this.key,IV);
+        return {cipher,IV};
+    }
+    createMyDecipherIV(IV){
+        if(!this.key){
+            throw new Error("No key defined for cipher");
+        }
+        
+        const decipher = crypto.createDecipheriv(this.cipheralgorithm, this.key,IV);
+        return {decipher,IV};
     }
 
     createMyCipher(){
@@ -37,10 +54,10 @@ class CipherWrapper{
         crypted += cipher.final(this.encryptcoding);
         return crypted; 
     }
-    decryptText(text){
+    decryptText(cipherText){
         const decipher = this.createMyDecipher();
     
-        var dec = decipher.update(text,this.encryptcoding,this.srccoding);
+        var dec = decipher.update(cipherText,this.encryptcoding,this.srccoding);
         dec += decipher.final(this.srccoding);
         return dec;
     }
@@ -74,6 +91,12 @@ class CipherWrapper{
         return outstream;
     }
 
+    generateRandomKey(){
+        return crypto.randomBytes(this.RSAAsyncSize).toString('hex');
+    }
+    generateIV(len){
+        return crypto.randomBytes(len);
+    }
 }
 
 module.exports=CipherWrapper;
