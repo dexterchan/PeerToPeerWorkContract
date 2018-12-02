@@ -5,15 +5,19 @@ const zlib = require('zlib');
 const debug=require("debug")("app:debug");
 const KeyVault = require("../../KeyVault/KeyVaultService");
 const eCashOrderBackEndCreate=require("./eCashOrderBackend").create;
+
+const {bankEncryptAndSignECashOrder}=require("./eCashOrderBackend");
+
+
+//To be removed to backend
 const pkeyCipherWrapperClass=require("../../CryptoWrapper/PkeyCipherWrapper");
 const CipherIVWrapperClass=require("../../CryptoWrapper/CipherWrapperIV");
 
 const cipheralgorithm="aes-256-cbc";
 const signAlgorithm="sha256";
+//To be removed to backend
 
-const CreateCashOrderFromBank=async (finEntity, requestJson, res)=>{
 
-};
 
 router.post("/",(req,res)=>{
     requestJson=req.body;
@@ -23,6 +27,16 @@ router.post("/",(req,res)=>{
 
     debug("do encrytion");
     
+    bankEncryptAndSignECashOrder(requestJson.finEntity,cashorder,
+        (result)=>{
+            res.send(result);
+        },
+        (err)=>{
+            res.status(400).send(err.message);
+        }
+        );
+
+    /*
     //get the private key of bank
     bankPrivateKey=KeyVault.privateKeyFunc(requestJson.finEntity);
 
@@ -68,6 +82,7 @@ router.post("/",(req,res)=>{
         orgCashorderSignature:originalCashOrderSig64,
         encryptedCashorderSignature:encryptedCashOrderSig64
     });
+    */
 }
 );
 

@@ -20,6 +20,34 @@ class MyKeyStore{
         const file=fs.readFileSync(expectedFile);
         return file;
     }
+
+    getPrivateKeyPromise(acct){
+        return  new Promise((resolve, reject)=>{
+            //async work
+            const expectedFile = path.join( this.keyPath,acct+this.privKeyext);
+            fs.readFile(expectedFile, (err,data)=>{
+                if(err ){
+                    reject(new Error(`Failed to retrieve key ${acct} : ${err.message}`));
+                }else{
+                    resolve (data.toString("ascii"));
+                }
+            });
+        });
+    }
+
+    getPublicKeyPromise(acct){
+        return  new Promise((resolve, reject)=>{
+            //async work
+            const expectedFile = path.join( this.keyPath,acct+this.pubKeyext);
+            fs.readFile(expectedFile, (err,data)=>{
+                if(err ){
+                    reject(new Error(`Failed to retrieve public key ${acct} : ${err.message}`));
+                }else{
+                    resolve (data.toString("ascii"));
+                }
+            });
+        });
+    }
 }
 
 
