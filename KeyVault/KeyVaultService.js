@@ -8,11 +8,19 @@ const MyKeyStore=require("./"+SrcKeyStore);
 
 keyStore=new MyKeyStore();
 privateKeyFunc=(acct)=>{
+    try{
     return keyStore.getPrivateKey(acct).toString("ascii")
+    }catch(err){
+        throw new Error(`user ${acct} key not found`)
+    }
 };
 
 publicKeyFunc=(acct)=>{
+    try{
     return keyStore.getPublicKey(acct).toString("ascii");
+    }catch(err){
+        throw new Error(`user ${acct} cert not found`)
+    }
 };
 
 

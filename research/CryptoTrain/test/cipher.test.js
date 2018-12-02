@@ -100,15 +100,16 @@ describe("Test Cipher",()=>{
             //transfer
             cipherText64=Buffer.from(cipherText,"hex").toString("base64");
             cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+            IV64 = IV.toString('base64');
             debugAll("cipher key length:"+cipherSymKeyString64.length);
             debugAll(cipherSymKeyString64);
             transferedCipher = Buffer.from(cipherSymKeyString64,"base64").toString("hex");
             transferedcipherText = Buffer.from(cipherText64,"base64").toString("hex");
-
+            transferedIV = Buffer.from(IV64,"base64");
             
             //sym key decrypt by private key
             const decryptedKey = pkcipher.privateDecrypt(transferedCipher);
-            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
+            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,transferedIV);
             //decrypted symkey decrypt cipher text
             const decruptedText=mydecipher.decryptText(transferedcipherText);
             assert (symKey==decryptedKey);
@@ -133,15 +134,17 @@ describe("Test Cipher",()=>{
             //transfer
             cipherText64=Buffer.from(cipherText,"hex").toString("base64");
             cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+            IV64 = IV.toString('base64');
             debugAll("cipher key length:"+cipherSymKeyString64.length);
             debugAll(cipherSymKeyString64);
             transferedCipher = Buffer.from(cipherSymKeyString64,"base64").toString("hex");
             transferedcipherText = Buffer.from(cipherText64,"base64").toString("hex");
+            transferedIV = Buffer.from(IV64,"base64");
 
 
             //sym key decrypt by public key
             const decryptedKey = pkcipher.publicDecrypt(transferedCipher);
-            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
+            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,transferedIV);
             
             //decrypted symkey decrypt cipher text
             const decruptedText=mydecipher.decryptText(transferedcipherText);

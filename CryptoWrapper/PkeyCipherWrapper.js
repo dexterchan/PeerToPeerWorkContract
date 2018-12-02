@@ -1,4 +1,5 @@
 const CipherWrapper = require("./CipherWrapper");
+
 const crypto = require('crypto');
 const fs = require("fs");
 class PkeyCipherWrapper extends CipherWrapper{
@@ -9,7 +10,7 @@ class PkeyCipherWrapper extends CipherWrapper{
         
         this.RSAAsyncSize=100;
     }
-    
+    /*
     async ReadAsyncPemFile(pemFile){
         try{
             const pem=await new Promise((resolve, reject)=>{
@@ -27,9 +28,11 @@ class PkeyCipherWrapper extends CipherWrapper{
         }catch (err){
             console.log(err);
         }
-    }
+    }*/
 
     setPrivateKey(key){
+
+        
         this.key=key;
     }
     setPublicKey(pub){
