@@ -75,32 +75,36 @@ class PkeyCipherWrapper extends CipherWrapper{
         return verify.verify(this.pub, sig, this.encryptcoding);
     }
 
-    publicEncryptHex(hex){
+    publicEncrypt(msg){
         if(!this.pub){
             throw new Error("No public key defined for encryption");
         }
-        const buf = Buffer.from(hex);
-        return crypto.publicEncrypt(this.pub, buf);
+        const buf = Buffer.from(msg);
+        const cipherBuf= crypto.publicEncrypt(this.pub, buf);
 
+        return cipherBuf.toString(this.encryptcoding);
     }
-    publicDecryptHex(buf){
+    publicDecrypt(cipherHex){
         if(!this.pub){
             throw new Error("No public key defined for decryption");
         }
+        const buf = Buffer.from(cipherHex,this.encryptcoding);
         return crypto.publicDecrypt(this.pub,buf);
     }
-    privateEncryptHex(hex){
+    privateEncrypt(msg){
         if(!this.key){
             throw new Error("No key defined for encryption");
         }
-        const buf = Buffer.from(hex);
-        return crypto.privateEncrypt(this.key,buf);
+        const buf = Buffer.from(msg);
+        const cipherBuf= crypto.privateEncrypt(this.key,buf);
+        return cipherBuf.toString(this.encryptcoding);
     }
-    privateDecryptHex(buf){
+    privateDecrypt(cipherHex){
         if(!this.key){
             throw new Error("No key defined for decryption");
         }
-        //const buf = Buffer.from(cipherHex);
+        
+        const buf = Buffer.from(cipherHex,this.encryptcoding);
         return crypto.privateDecrypt(this.key,buf);
     }
     

@@ -95,20 +95,25 @@ describe("Test Cipher",()=>{
             cipherText = mycipher.encryptText(inputText);
 
             //sym key encrypt by public key
-            const cipherSymKey = pkcipher.publicEncryptHex(symKey);
+            const cipherSymKey = pkcipher.publicEncrypt(symKey);
 
             //transfer
-            cipherSymKeyString = cipherSymKey.toString("hex");
-            transferedCipher = Buffer.from(cipherSymKeyString,"hex");
+            cipherText64=Buffer.from(cipherText,"hex").toString("base64");
+            cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+            debugAll("cipher key length:"+cipherSymKeyString64.length);
+            debugAll(cipherSymKeyString64);
+            transferedCipher = Buffer.from(cipherSymKeyString64,"base64").toString("hex");
+            transferedcipherText = Buffer.from(cipherText64,"base64").toString("hex");
+
             
             //sym key decrypt by private key
-            const decryptedKey = pkcipher.privateDecryptHex(transferedCipher);
+            const decryptedKey = pkcipher.privateDecrypt(transferedCipher);
             const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
             //decrypted symkey decrypt cipher text
-            const decruptedText=mydecipher.decryptText(cipherText);
+            const decruptedText=mydecipher.decryptText(transferedcipherText);
             assert (symKey==decryptedKey);
             assert.equal (inputText,decruptedText);
-            debugAll(decruptedText);
+            //debugAll(decruptedText);
         });
 
         it("test async private key encrypt workflow",()=>{
@@ -122,21 +127,27 @@ describe("Test Cipher",()=>{
             cipherText = mycipher.encryptText(inputText);
 
             //sym key encrypt by private key
-            const cipherSymKey = pkcipher.privateEncryptHex(symKey);
+            const cipherSymKey = pkcipher.privateEncrypt(symKey);
 
+            
             //transfer
-            cipherSymKeyString = cipherSymKey.toString("hex");
-            transferedCipher = Buffer.from(cipherSymKeyString,"hex");
+            cipherText64=Buffer.from(cipherText,"hex").toString("base64");
+            cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+            debugAll("cipher key length:"+cipherSymKeyString64.length);
+            debugAll(cipherSymKeyString64);
+            transferedCipher = Buffer.from(cipherSymKeyString64,"base64").toString("hex");
+            transferedcipherText = Buffer.from(cipherText64,"base64").toString("hex");
+
 
             //sym key decrypt by public key
-            const decryptedKey = pkcipher.publicDecryptHex(transferedCipher);
+            const decryptedKey = pkcipher.publicDecrypt(transferedCipher);
             const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IV);
             
             //decrypted symkey decrypt cipher text
-            const decruptedText=mydecipher.decryptText(cipherText);
+            const decruptedText=mydecipher.decryptText(transferedcipherText);
             assert (symKey==decryptedKey);
             assert.equal (inputText,decruptedText);
-            debugAll(decruptedText);
+            //debugAll(decruptedText);
         });
 
     }
