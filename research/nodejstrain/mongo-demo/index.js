@@ -1,18 +1,42 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/playground",{ useNewUrlParser: true } )
-    .then(()=>console.log("connected to MongoDB..."))
+mongoose.connect("mongodb://localhost/playground"/*{ ,useNewUrlParser: true } */)
+    .then(()=>{
+        console.log("connected to MongoDB...");
+        //removeCourse();
+    })
     .catch(err => console.error("Could not connect to MongoDB...",err));
 
 
 const courseSchema = new mongoose.Schema(
     {
-        name:String,
+        name:{type: String , required:true},
         author:String,
-        tags:[String],
+        tags:{
+            type: Array,
+            validate: {
+                isAsync:true,
+                validator: function (v,callback){
+                    setTimeout( ()=>{
+                        //do async work
+                        const result = v && v.length>0;
+                        callback(result);
+                    },1000);
+                    //return v && v.length>0;
+                }
+            }
+
+        },
+        category:{
+            type: String,
+            required: true,
+            enum : ["web","mobile","network"],
+            lowercase:true,
+            trim:true
+        },
         date: {type: Date, default:Date.now},
         isPublished:Boolean,
-        price: Number
+        price: {type:Number, required: function(){return this.isPublished}}
     }
 );
 
@@ -27,14 +51,22 @@ async function createCourse(){
     const courseNode = new Course({
         name:"React course",
         author:"abc",
+        category:"web",
         tags:["react","frontend"],
         isPublished:true,
         price: 10
     });
 
     //async, return promise
-    const result = await courseNode.save();
-    console.log(result);
+    try{
+        await courseNode.validate();
+        const result = await courseNode.save();
+
+        console.log(result);
+    }catch(ex){
+        console.log(ex.message);
+    }
+    
 }
 
 //createCourse();
@@ -102,34 +134,36 @@ async function updateCourseByFindByIdAndUpdate(id){
         },{new:true}
     );
 }
-
+/*
 async function removeCourse(id){
-    const course=Course.remove({_id:id});
+    const course=Course.deleteOne({_id:id});
     return course;
 }
-
+*/
 
 //getCourses();
 async  function runQueryUpdate(){
-const updatedCourse=await updateCourseByQueryFirst("5c0bd8b005b7290e1b4dd618");
+const updatedCourse=await updateCourseByQueryFirst("5c0bdd1d0c7525045bab1ef7");
 console.log(updatedCourse);
 }
 async function runUpdate(){
-    const updatedCourse = await updateCourseByUpdateDirectly("5c0bd8b005b7290e1b4dd618");
+    const updatedCourse = await updateCourseByUpdateDirectly("5c0bdd1d0c7525045bab1ef7");
     console.log(updatedCourse);
 }
 async function runFindIdAndUpdate(){
-    const updatedCourse = await updateCourseByFindByIdAndUpdate("5c0bd8b005b7290e1b4dd618");
+    const updatedCourse = await updateCourseByFindByIdAndUpdate("5c0bdd1d0c7525045bab1ef7");
     console.log(updatedCourse);
 }
-async function removeCourse(){
+
+/*
+async function removeCoursecase(){
     try{
-    const r = await removeCourse("5c0bd8b005b7290e1b4dd618");
-    console.log(r);
+    const r = await removeCourse("5c0bdd1d0c7525045bab1ef7");
+    //console.log(r);
     }catch(ex){
-        console.log(ex.message);
+        console.log(ex);
     }
-}
+}*/
 //runFindIdAndUpdate();
 //removeCourse();
-//createCourse();
+createCourse();

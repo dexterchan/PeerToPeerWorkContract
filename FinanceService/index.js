@@ -32,6 +32,6 @@ if (process.env.NODE_ENV === "production"){
 }
 
 //PORT
-const port=process.env.PORT || 3000
+const port=process.env.PORT || 8001
 systemLogger("Started app");
 app.listen(port,()=>console.log(`Listening on port: ${port}...`));

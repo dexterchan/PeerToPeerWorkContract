@@ -1,0 +1,29 @@
+{
+  "name": "PeerToPeerFrontEnd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.0.0",
+    "cross-fetch": "^3.0.0",
+    "debug": "^4.1.0",
+    "fs": "0.0.1-security",
+    "mocha": "^5.2.0",
+    "next": "^7.0.2",
+    "next-routes": "^1.4.2",
+    "node-fetch": "^2.3.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.84.0"
+  }
+}
