@@ -1,6 +1,6 @@
 const assert = require("assert");
 //const Request = require("Request");
-const fetch = require('cross-fetch');
+const fetch = require('node-fetch');
 const headers = {};
 const URL = "http://localhost:8001/api/ecashorder";
 beforeEach(
@@ -23,7 +23,7 @@ describe("Test Restful service client",()=>{
 
         const response = await fetch(URL, {
             method: 'POST',
-            mode: 'CORS',
+            //mode: 'CORS',
             body: JSON.stringify(data),
             headers: headers
         });

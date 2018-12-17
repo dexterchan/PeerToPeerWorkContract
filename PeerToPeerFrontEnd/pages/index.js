@@ -1,19 +1,11 @@
 import React, { Component } from "react";
-import { Dropdown} from 'semantic-ui-react';
+import { Dropdown,Icon} from 'semantic-ui-react';
 import CreateCashOrder from "../components/CreateCashOrder";
 import Layout from "../components/Layout";
+import {Link} from "../routes";
 class PeerToPeerFrontEnd extends Component {
 
-    userOptions = [
-        {
-            text: 'hirer',
-            value: 'hirer'
-        },
-        {
-            text: 'hiree',
-            value: 'hiree'
-        }
-    ]
+    
     constructor(props) {
         super(props);
 
@@ -25,8 +17,10 @@ class PeerToPeerFrontEnd extends Component {
     render() {
         return (
             <Layout>
-                <Dropdown placeholder='Select user' fluid selection options={this.userOptions} value={this.state.user} />
-                <CreateCashOrder user={this.state.user}/>
+                <Link route="/projects/new">
+                    <a className="item"><Icon disabled name='add circle' /></a>
+                </Link>
+                
             </Layout>
         );
     }

@@ -15,11 +15,11 @@ const signAlgorithm="sha256";
 
 createOrder=(userid,amount,finEntity)=>{
     const uuid=uuidv4();
-    finalDoc = paymentTemplate.replace("${UUID}",uuid)
+    const eCashOrderDoc = paymentTemplate.replace("${UUID}",uuid)
                             .replace("${finEntity}",finEntity)
                             .replace("${amount}",amount.toString())
                             .replace("${userid}",userid);
-    return finalDoc;
+    return {userid, amount, finEntity,eCashOrderDoc};
 };
 
 const bankEncryptAndSignECashOrder=async (finEntity,eCashOrder,callback,errCallback)=>{
@@ -37,7 +37,7 @@ const bankEncryptAndSignECashOrder=async (finEntity,eCashOrder,callback,errCallb
 function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
     return new Promise((resolve, reject)=>{
         try{
-        
+            const eCashOrderDoc = eCashOrder.eCashOrderDoc;
             const pkcipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
             debug("pkcipher initialized");
             const symKey = pkcipher.generateRandomKey();
@@ -49,19 +49,23 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
             const IV = sessioncipher.IV;
     
             
-            cipherText = sessioncipher.encryptText(eCashOrder);
+            cipherText = sessioncipher.encryptText(eCashOrderDoc);
             //sym key encrypt by private key
             const cipherSymKey = pkcipher.privateEncrypt(symKey);
             cipherText64=Buffer.from(cipherText,"hex").toString("base64");
             cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
             IV64 = IV.toString("base64");
     
-            cipherDoc64withMeta={encryptedCashorder:cipherText64,finEntity:requestJson.finEntity,amount:requestJson.amount};
+            cipherDoc64withMeta={
+                encryptedCashorder:cipherText64,
+                finEntity:eCashOrder.finEntity,
+                owner:eCashOrder.userid,
+                amount:eCashOrder.amount};
     
             debug(JSON.stringify(cipherDoc64withMeta));
     
             //Sign the original doc
-            originalCashOrderSig = pkcipher.signSignature(eCashOrder);
+            originalCashOrderSig = pkcipher.signSignature(eCashOrderDoc);
             originalCashOrderSig64 = Buffer.from(originalCashOrderSig,"hex").toString("base64");
     
             //Sign the encrypted doc

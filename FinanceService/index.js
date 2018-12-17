@@ -1,4 +1,5 @@
 const express=require("express");
+const cors = require('cors')
 const Helmet=require('helmet');
 const Morgan = require('morgan');
 const config = require("config");
@@ -7,7 +8,7 @@ const app=express();
 
 const eCashOrder_router=require("./routes/eCashOrder");
 
-
+app.use(cors());
 app.use(express.json());
 
 if (process.env.NODE_ENV !== "production"){

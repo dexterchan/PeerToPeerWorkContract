@@ -3,7 +3,7 @@ const debug = require("debug")("app:DEBUG");
 //const config = require("config");
 import { Dropdown, Button, Form, Message, Label, Input } from 'semantic-ui-react';
 import { Link } from "../routes";
-const fetch = require('cross-fetch');
+const fetch = require('node-fetch');
 
 
 const financial_institution_list=[
@@ -79,22 +79,21 @@ class CreateCashOrder extends Component {
             DepositOrLoan:true
         };
 
-        console.log(data);
+        //console.log(data);
         const URL="http://localhost:8001/api/ecashorder";//config.get("ecashorder");
 
         const response = await fetch(URL, {
             method: 'POST',
-            mode: 'CORS',
+            //mode: 'CORS', not using cross-fetch
             body: JSON.stringify(data),
             headers: headers
         });
-        console.log(await response.json());
+        const newEashOrder= await response.json();
+        this.props.onECashOrderFinish(newEashOrder);
+        //console.log();
     };
 
-    onChange = (e, data) => {
-        console.log(data.value);
-        this.setState({ bank: data.value });
-      }
+    
 
     render() {
 
@@ -118,7 +117,9 @@ class CreateCashOrder extends Component {
                     <Form.Field>
                         <label>Financial institution</label>
                         <Dropdown placeholder='Choose financial institution' fluid selection options={this.financial_institution_list} value={this.state.bank} 
-                            onChange={this.onChange}/>
+                            onChange={(e, data) => {
+                                this.setState({ bank: data.value });
+                            }}/>
                     </Form.Field>
                     <Form.Field>
                         <label>Remark</label>
