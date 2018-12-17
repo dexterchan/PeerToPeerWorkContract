@@ -4,3 +4,4 @@ node_modules
 *.decrypted
 *.encrypted
 keys/
+.next
