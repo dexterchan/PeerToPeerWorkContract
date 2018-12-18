@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 const debug = require("debug")("app:DEBUG");
-//const config = require("config");
+
 import { Dropdown, Button, Form, Message, Label, Input } from 'semantic-ui-react';
 import { Link } from "../routes";
 const fetch = require('node-fetch');
@@ -19,6 +19,8 @@ const financial_institution_list=[
 
 
 class CreateCashOrder extends Component {
+
+    
     constructor(props) {
         super(props);
         //console.log(`Constructor:${props}`);
@@ -32,6 +34,8 @@ class CreateCashOrder extends Component {
             statusMessage:"",
             loading:false
         };
+        this.webserviceurl = this.props.webserviceurl;
+        debug(`URL of webservice:${this.webserviceurl})`);
     }
     financial_institution_list=[
         {
@@ -44,7 +48,7 @@ class CreateCashOrder extends Component {
         }
     ];
     componentDidMount() {
-        console.log(`componentDidMount:${this.state.user}`);
+        
         debug(`componentDidMount:${this.state.user}`);
     }
     checkValue= (event)=>{
@@ -80,8 +84,8 @@ class CreateCashOrder extends Component {
         };
 
         //console.log(data);
-        const URL="http://localhost:8001/api/ecashorder";//config.get("ecashorder");
-
+        const URL=this.webserviceurl;//"http://localhost:8001/api/ecashorder";//config.get("ecashorder");
+        
         const response = await fetch(URL, {
             method: 'POST',
             //mode: 'CORS', not using cross-fetch
