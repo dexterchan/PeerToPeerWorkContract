@@ -1,5 +1,78 @@
 pragma solidity >=0.4.22 <0.6.0;
 
+contract Peer2PeerProjectDashBoard{
+    struct Member{
+        address member_address;
+        string name;
+        int credit;
+    }
+    
+    Peer2PeerProject[] public deployedProjects;
+    Member[] public memberList;
+    address public myManager;
+    mapping (address=>uint) public memberMap;
+    
+    constructor() public{
+        myManager=msg.sender;
+    }
+    function createProject(string memory _task_des, uint _reward,int _minCredit, string memory _duration) public returns(Peer2PeerProject){
+        Peer2PeerProject  newProject=new Peer2PeerProject(this,msg.sender,_task_des, _reward, _minCredit,   _duration);
+        deployedProjects.push(newProject);
+        return newProject;
+    }
+    
+    function getDeployedProjects() public view returns (Peer2PeerProject[] memory){
+        return deployedProjects;
+    }
+    
+    function addMember(address  _myaddress, string memory _name, int _credit) public restrictedmgr{
+        require(memberMap[_myaddress]==0," has been registered once");
+        Member memory m = Member(
+           {
+               member_address:_myaddress,
+               name:_name,
+               credit:_credit
+           } 
+        );
+        
+        memberList.push(m);
+        uint inx = memberList.length;
+        memberMap[_myaddress]=inx;
+    }
+    modifier restrictedmgr(){
+        require(msg.sender==myManager,"Only manager can access");
+        _;
+    }
+    
+    function getMember (address m ) internal view returns (uint){
+        uint inx = memberMap[m];
+        require(inx>0,"Not found the member");
+        return inx-1;
+    }
+    
+    function getMemberName(address m) public view returns (string memory){
+        uint inx = getMember(m);
+        Member memory m = memberList[inx];
+        
+        return m.name;
+    }
+    
+    function getMemberCredit(address m) public view returns (int ){
+        uint inx =getMember(m);
+        Member memory m = memberList[inx];
+        
+        return m.credit;
+    }
+    
+    function updateMemberCredit(address m, int creditChange) public restrictedmgr returns (int ) {
+        uint inx = getMember(m);
+        Member storage m = memberList[inx];
+        
+        return m.credit+=creditChange;
+    }
+   
+}
+
 contract Peer2PeerProject{
     struct Evidence {
             string evidenceDes;
@@ -23,7 +96,7 @@ contract Peer2PeerProject{
     
     uint public reward;
     
-    uint public minCreditScore;
+    int public minCreditScore;
     string public duration;
     string public hirerEncryptedCashOrder;
     
@@ -32,14 +105,14 @@ contract Peer2PeerProject{
     uint public creationDate;
     uint public executionDate;
     
-    
+    Peer2PeerProjectDashBoard dashBoard;
     
     
     WorkEvidenceClass public workEvidence;
     
-    constructor ( string memory _task_des, uint _reward,uint _minCredit, string memory _duration) public{
-        
-        hirer=msg.sender;
+    constructor (Peer2PeerProjectDashBoard _dashBoard, address _hirer, string memory _task_des, uint _reward,int _minCredit, string memory _duration) public{
+        dashBoard=_dashBoard;
+        hirer=_hirer;
         
         task_description=_task_des;
         
@@ -74,7 +147,7 @@ contract Peer2PeerProject{
         _;
     }
     modifier checkEvidenceRange(uint num){
-        require(workEvidence.evidenceCount>num && num>=0,"Evidence out of range");
+        require(workEvidence.evidences.length>num && num>=0,"Evidence out of range");
         _;
     }
     
@@ -125,5 +198,8 @@ contract Peer2PeerProject{
         require(myStatus==STATUS.PAYMENT, "hiree only confirm payment after hirer making payment");
         myStatus=STATUS.CLOSE;
     }
-    
+    function getMemberName(address a) public view returns (string memory){
+       //uint  m = dashBoard.getMemberMap(a);
+        return dashBoard.getMemberName(a);
+    }
 }
