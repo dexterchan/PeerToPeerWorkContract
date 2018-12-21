@@ -5,3 +5,5 @@ node_modules
 *.encrypted
 keys/
 .next
+buildV4
+buildV5
