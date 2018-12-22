@@ -52,7 +52,7 @@ beforeEach(
 
         factory=await new web3.eth.Contract(compiledFactoryABI)
         .deploy({data:"0x"+compliedFactoryEVM.bytecode.object }) //tell web3 to prepare a copy of contract for deployment
-        .send({from: accounts[0] ,  gas:3920835});
+        .send({from: accounts[0] ,  gas:5024164});
 
         hirerAddress = accounts[1];
         hireeAddress = accounts[2];
@@ -137,12 +137,41 @@ describe("Test Ethereum contract",()=>{
             await project.methods.hireeSubmitWork(jobdone).send(
                 { from: hireeAddress, gas: 5049200 }
             );
-
+            await project.methods.hireeSubmitWork(jobdone+" more info").send(
+                { from: hireeAddress, gas: 5049200 }
+            );
             const cnt = await project.methods.getEvidenceCount().call();
-            assert(cnt==1);
+            assert(cnt==2);
 
         });
+        it("hirer accepts work",async()=>{
+            const newECashOrder=await createEcashOrder();
+            let strNewECashOrder = JSON.stringify(newECashOrder);
+            await project.methods.deployCashOrder(strNewECashOrder).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+            //hireeTakeJob
 
+            await project.methods.hireeTakeJob().send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+            const hiree = await project.methods.hiree().call();
 
+            //hireeSubmitWork
+            const jobdone="JOb is done";
+            await project.methods.hireeSubmitWork(jobdone).send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+
+            //hirer accept work
+            const comment="missing ABC";
+            await project.methods.hirerAcceptWork(comment,false,true).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+
+            const num = await project.methods.getEvidenceCount().call();
+            const checkComment = await project.methods.getEvidenceHirerComment(num-1).call();
+            assert(checkComment,comment);
+        });
 }
 );

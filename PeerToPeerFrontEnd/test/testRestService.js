@@ -28,7 +28,7 @@ describe("Test Restful service client",()=>{
             headers: headers
         });
 
-        console.log(await response.json());
+        //console.log(await response.json());
         assert.equal(response.status,200)
 
     });

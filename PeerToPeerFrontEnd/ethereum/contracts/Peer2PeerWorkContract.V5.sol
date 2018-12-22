@@ -80,10 +80,12 @@ contract Peer2PeerProject{
             
             string hirerComment;
             bool hirerAccepted;
+            bool hirerRejected;
     }
     struct WorkEvidenceClass{
         Evidence[] evidences;
-        uint evidenceCount;
+        //uint evidenceCount;
+        bool accepted;
     }
     enum STATUS { NEW, PROCUREMENT, EXECUTION, EVALUATION,ACCEPTED, PAYMENT, CLOSE }
     
@@ -123,7 +125,7 @@ contract Peer2PeerProject{
         myStatus = STATUS.NEW;
         projectid=uint( keccak256(abi.encode(block.difficulty,now,hirer,task_description,reward,minCreditScore,duration)));//keccak256 eqv
         creationDate=now;
-        workEvidence.evidenceCount=0;
+        workEvidence.accepted=false;
     }
     
     function deployCashOrder ( string memory _ecashorder) public restrictedhirer{
@@ -153,28 +155,34 @@ contract Peer2PeerProject{
     
     function hireeSubmitWork (string memory myWorkEvidence) public restrictedhiree{
         require(myStatus==STATUS.EXECUTION || myStatus==STATUS.EVALUATION,"hiree only submit work when contract is at EXECUTION/EVALUATION stage");
-        
+        require(!workEvidence.accepted,"only submit work when work not yet accepted");
         myStatus = STATUS.EVALUATION;
         
         Evidence memory newEvidence =  Evidence({
                evidenceDes:myWorkEvidence,
                hireeSubmitDate:now,
                hirerComment:"",
-               hirerAccepted:false
+               hirerAccepted:false,
+               hirerRejected:false
             });
             
         workEvidence.evidences.push(newEvidence);
-        workEvidence.evidenceCount++;
+        
     }
     
-    function hirerAcceptWork (string memory comment, bool accept) public restrictedhirer{
+    function hirerAcceptWork (string memory comment, bool accept,bool reject) public restrictedhirer{
         require(myStatus==STATUS.EVALUATION, "hirer only accept work when contract is at EVALUATION stage");
-        require(workEvidence.evidenceCount>=1,"Please wait at least one evidence before accepting work");
-        workEvidence.evidences[workEvidence.evidenceCount-1].hirerComment=comment;
-        workEvidence.evidences[workEvidence.evidenceCount-1].hirerAccepted=accept;
-        if(accept){
+        require(workEvidence.evidences.length>=1,"Please wait at least one evidence before accepting work");
+        require(!workEvidence.accepted,"only accept work when work not yet accepted");
+        workEvidence.evidences[workEvidence.evidences.length-1].hirerComment=comment;
+        workEvidence.evidences[workEvidence.evidences.length-1].hirerAccepted=accept;
+        workEvidence.evidences[workEvidence.evidences.length-1].hirerRejected=reject;
+        
+        if(accept && !reject){
             myStatus = STATUS.ACCEPTED;
+            workEvidence.accepted=accept;
         }
+        
     }
     function getEvidenceCount() public view returns(uint){
         return workEvidence.evidences.length;
@@ -190,6 +198,9 @@ contract Peer2PeerProject{
     }
     function getEvidenceHirerAccepted(uint num) checkEvidenceRange ( num)  public view returns (  bool ){
         return workEvidence.evidences[num].hirerAccepted;
+    }
+    function getEvidenceHirerRejected(uint num) checkEvidenceRange ( num)  public view returns (  bool ){
+        return workEvidence.evidences[num].hirerRejected;
     }
     
     function hirerMakePayment(string memory _ecashorder ) public restrictedhirer{
