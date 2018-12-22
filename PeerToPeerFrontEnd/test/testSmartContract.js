@@ -20,7 +20,8 @@ let accounts;
 let factory;
 let projectAddress;
 let project;
-let projectMgrAddress;
+let hirerAddress;
+let hireeAddress;
 let eCashOrder;
 
 async function  createEcashOrder(){
@@ -53,7 +54,8 @@ beforeEach(
         .deploy({data:"0x"+compliedFactoryEVM.bytecode.object }) //tell web3 to prepare a copy of contract for deployment
         .send({from: accounts[0] ,  gas:3920835});
 
-        projectMgrAddress = accounts[1];
+        hirerAddress = accounts[1];
+        hireeAddress = accounts[2];
 
         let _task_des="Test project";
         let _reward=1;
@@ -63,13 +65,15 @@ beforeEach(
             _task_des,_reward,_minCredit,_duration
         ).send(
             {
-                from: projectMgrAddress,  gas:2932859
+                from: hirerAddress,  gas:2932859
             }
         );
         const addresses=await factory.methods.getDeployedProjects().call();
         projectAddress=addresses[0];
+        /*
         console.log("returned object:"+retObj);
         console.log("readaddress:"+addresses[0]);
+        */
         project=await new web3.eth.Contract(
             compiledProjectABI
             ,projectAddress);
@@ -85,19 +89,60 @@ beforeEach(
 describe("Test Ethereum contract",()=>{
         it("deposit eCashOrder", async()=>{
             const newECashOrder=await createEcashOrder();
-            let strNewECashOrder = JSON.stringify(newECashOrder).replace(/\"/g,"\\\"");
+            let strNewECashOrder = JSON.stringify(newECashOrder);
+            //strNewECashOrder = strNewECashOrder.replace(/\"/g,"\\\"");
             //console.log(strNewECashOrder);
             //const recoveredEcashOrder=JSON.parse(strNewECashOrder);
             //console.log(strNewECashOrder.replace(/\\\"/g,"\""));
             const recoveredEcashOrder=JSON.parse(strNewECashOrder.replace(/\\\"/g,"\""));
 
             await project.methods.deployCashOrder(strNewECashOrder).send(
-                {from: projectMgrAddress ,gas:5049200}
+                {from: hirerAddress ,gas:5049200}
             );
 
-            const deployedContract=await project.methods.hirerEncryptedCashOrder.call();
-            console.log(deployedContract);
-        }
-    );
+            const deployedContract=await project.methods.hirerEncryptedCashOrder().call();
+            assert.equal(deployedContract,strNewECashOrder);
+        });
+        it("hiree takes job",async()=>{
+            const newECashOrder=await createEcashOrder();
+            let strNewECashOrder = JSON.stringify(newECashOrder);
+            await project.methods.deployCashOrder(strNewECashOrder).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+            //hireeTakeJob
+
+            await project.methods.hireeTakeJob().send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+            const hiree = await project.methods.hiree().call();
+
+            assert(hiree == hireeAddress);
+
+        });
+        it("hiree submits work",async()=>{
+            const newECashOrder=await createEcashOrder();
+            let strNewECashOrder = JSON.stringify(newECashOrder);
+            await project.methods.deployCashOrder(strNewECashOrder).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+            //hireeTakeJob
+
+            await project.methods.hireeTakeJob().send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+            const hiree = await project.methods.hiree().call();
+
+            //hireeSubmitWork
+            const jobdone="JOb is done";
+            await project.methods.hireeSubmitWork(jobdone).send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+
+            const cnt = await project.methods.getEvidenceCount().call();
+            assert(cnt==1);
+
+        });
+
+
 }
 );

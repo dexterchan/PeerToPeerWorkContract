@@ -176,6 +176,9 @@ contract Peer2PeerProject{
             myStatus = STATUS.ACCEPTED;
         }
     }
+    function getEvidenceCount() public view returns(uint){
+        return workEvidence.evidences.length;
+    }
     function getEvidenceDescription(uint num) checkEvidenceRange ( num) public view returns ( string memory) {
         return workEvidence.evidences[num].evidenceDes;
     }
