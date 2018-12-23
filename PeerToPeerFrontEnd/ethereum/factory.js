@@ -1,6 +1,3 @@
-
-
-
 import web3 from './web3_query.js';
 
 const compiledFactoryABI=require("./buildV5/Peer2PeerProjectDashBoard.abi.json");

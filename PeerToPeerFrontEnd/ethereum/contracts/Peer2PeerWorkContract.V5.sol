@@ -44,22 +44,28 @@ contract Peer2PeerProjectDashBoard{
         _;
     }
     
-    function getMember (address m ) internal view returns (uint){
+    function getMember (address m ) public view returns (uint){
         uint inx = memberMap[m];
-        require(inx>0,"Not found the member");
-        return inx-1;
+        //require(inx>0,"Not found the member");
+        return inx;
     }
     
     function getMemberName(address m) public view returns (string memory){
         uint inx = getMember(m);
-        Member memory m = memberList[inx];
+        if(inx==0){
+            return " ";
+        }
+        Member memory m = memberList[inx-1];
         
         return m.name;
     }
     
     function getMemberCredit(address m) public view returns (int ){
         uint inx =getMember(m);
-        Member memory m = memberList[inx];
+        if(inx==0){
+            return 0;
+        }
+        Member memory m = memberList[inx-1];
         
         return m.credit;
     }
@@ -215,5 +221,34 @@ contract Peer2PeerProject{
     function getMemberName(address a) public view returns (string memory){
        //uint  m = dashBoard.getMemberMap(a);
         return dashBoard.getMemberName(a);
+    }
+    function getMember(address a) public view returns (uint){
+       //uint  m = dashBoard.getMemberMap(a);
+        return dashBoard.getMember(a);
+    }
+    
+    function getWorkContractSummary() public view returns (
+        uint,
+        address,string memory,
+        address,string memory,
+        string memory,
+        uint ,
+        string memory,
+        uint,
+        uint
+    )
+    {
+        string memory hirerName= dashBoard.getMemberName(hirer);
+        string memory hireeName = dashBoard.getMemberName(hiree);
+        return(
+            projectid,
+            hirer,hirerName,
+            hiree,hireeName,
+            task_description,
+            reward,
+            duration,
+            creationDate,
+            executionDate
+        );
     }
 }

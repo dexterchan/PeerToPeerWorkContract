@@ -172,6 +172,14 @@ describe("Test Ethereum contract",()=>{
             const num = await project.methods.getEvidenceCount().call();
             const checkComment = await project.methods.getEvidenceHirerComment(num-1).call();
             assert(checkComment,comment);
+
+            const summary = await project.methods.getWorkContractSummary().call();
+            console.log(summary);
+
+            let date = new Date(summary[9] * 1000);
+            console.log("Convert to date:",date);
+
+            
         });
 }
 );

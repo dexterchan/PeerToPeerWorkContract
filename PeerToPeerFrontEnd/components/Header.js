@@ -42,7 +42,7 @@ class Header {
                 <Menu.Menu position='right'>
 
 
-                    <Link route="/projects/new">
+                    <Link route="/workcontract/new">
                         <a className="item"><Icon disabled name='add circle' /></a>
                     </Link>
 
@@ -75,7 +75,7 @@ export default(props)=>{
             <Menu.Menu position='right'>
                 
 
-                <Link route="/projects/new">
+                <Link route="/workcontract/new">
                     <a className="item"><Icon disabled name='add circle' /></a>
                 </Link>
                 
