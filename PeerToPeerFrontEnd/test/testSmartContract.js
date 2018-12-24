@@ -140,7 +140,7 @@ describe("Test Ethereum contract",()=>{
             await project.methods.hireeSubmitWork(jobdone+" more info").send(
                 { from: hireeAddress, gas: 5049200 }
             );
-            const cnt = await project.methods.getEvidenceCount().call();
+            const cnt = await project.methods.getWorkLogCount().call();
             assert(cnt==2);
 
         });
@@ -169,10 +169,10 @@ describe("Test Ethereum contract",()=>{
                 { from: hirerAddress, gas: 5049200 }
             );
 
-            const num = await project.methods.getEvidenceCount().call();
-            const checkComment = await project.methods.getEvidenceHirerComment(num-1).call();
-            assert(checkComment,comment);
-
+            const num = await project.methods.getWorkLogCount().call();
+            const workLogs = await project.methods.workLogs(num-1).call();
+            assert(workLogs.hirerComment,comment);
+            console.log(workLogs);
             const summary = await project.methods.getWorkContractSummary().call();
             console.log(summary);
 

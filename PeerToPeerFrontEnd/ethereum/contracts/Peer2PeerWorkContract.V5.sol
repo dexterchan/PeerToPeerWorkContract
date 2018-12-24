@@ -80,19 +80,18 @@ contract Peer2PeerProjectDashBoard{
 }
 
 contract Peer2PeerProject{
-    struct Evidence {
-            string evidenceDes;
+    struct WorkLog {
+            string logDes;
             uint hireeSubmitDate;
             
             string hirerComment;
             bool hirerAccepted;
             bool hirerRejected;
     }
-    struct WorkEvidenceClass{
-        Evidence[] evidences;
-        //uint evidenceCount;
-        bool accepted;
-    }
+    
+    
+    bool public workAccepted;
+    
     enum STATUS { NEW, PROCUREMENT, EXECUTION, EVALUATION,ACCEPTED, PAYMENT, CLOSE }
     
     STATUS public myStatus;
@@ -115,8 +114,7 @@ contract Peer2PeerProject{
     
     Peer2PeerProjectDashBoard dashBoard;
     
-    
-    WorkEvidenceClass public workEvidence;
+    WorkLog[] public workLogs;
     
     constructor (Peer2PeerProjectDashBoard _dashBoard, address _hirer, string memory _task_des, uint _reward,int _minCredit, string memory _duration) public{
         dashBoard=_dashBoard;
@@ -131,7 +129,7 @@ contract Peer2PeerProject{
         myStatus = STATUS.NEW;
         projectid=uint( keccak256(abi.encode(block.difficulty,now,hirer,task_description,reward,minCreditScore,duration)));//keccak256 eqv
         creationDate=now;
-        workEvidence.accepted=false;
+        workAccepted=false;
     }
     
     function deployCashOrder ( string memory _ecashorder) public restrictedhirer{
@@ -154,60 +152,62 @@ contract Peer2PeerProject{
         require(msg.sender==hiree,"Only hiree can access");
         _;
     }
-    modifier checkEvidenceRange(uint num){
-        require(workEvidence.evidences.length>num && num>=0,"Evidence out of range");
+    modifier checkWorkLogRange(uint num){
+        require(workLogs.length>num && num>=0,"Work log out of range");
         _;
     }
     
     function hireeSubmitWork (string memory myWorkEvidence) public restrictedhiree{
         require(myStatus==STATUS.EXECUTION || myStatus==STATUS.EVALUATION,"hiree only submit work when contract is at EXECUTION/EVALUATION stage");
-        require(!workEvidence.accepted,"only submit work when work not yet accepted");
+        require(!workAccepted,"only submit work when work not yet accepted");
         myStatus = STATUS.EVALUATION;
         
-        Evidence memory newEvidence =  Evidence({
-               evidenceDes:myWorkEvidence,
+        WorkLog memory newEvidence =  WorkLog({
+               logDes:myWorkEvidence,
                hireeSubmitDate:now,
                hirerComment:"",
                hirerAccepted:false,
                hirerRejected:false
             });
             
-        workEvidence.evidences.push(newEvidence);
+        
+        workLogs.push(newEvidence);
         
     }
     
     function hirerAcceptWork (string memory comment, bool accept,bool reject) public restrictedhirer{
         require(myStatus==STATUS.EVALUATION, "hirer only accept work when contract is at EVALUATION stage");
-        require(workEvidence.evidences.length>=1,"Please wait at least one evidence before accepting work");
-        require(!workEvidence.accepted,"only accept work when work not yet accepted");
-        workEvidence.evidences[workEvidence.evidences.length-1].hirerComment=comment;
-        workEvidence.evidences[workEvidence.evidences.length-1].hirerAccepted=accept;
-        workEvidence.evidences[workEvidence.evidences.length-1].hirerRejected=reject;
+        require(workLogs.length>=1,"Please wait at least one evidence before accepting work");
+        require(!workAccepted,"only accept work when work not yet accepted");
+        workLogs[workLogs.length-1].hirerComment=comment;
+        workLogs[workLogs.length-1].hirerAccepted=accept;
+        workLogs[workLogs.length-1].hirerRejected=reject;
         
         if(accept && !reject){
             myStatus = STATUS.ACCEPTED;
-            workEvidence.accepted=accept;
+            workAccepted=accept;
         }
         
     }
-    function getEvidenceCount() public view returns(uint){
-        return workEvidence.evidences.length;
+    function getWorkLogCount() public view returns(uint){
+        return workLogs.length;
     }
-    function getEvidenceDescription(uint num) checkEvidenceRange ( num) public view returns ( string memory) {
-        return workEvidence.evidences[num].evidenceDes;
+    function getLogDescription(uint num) checkWorkLogRange ( num) public view returns ( string memory) {
+        return workLogs[num].logDes;
     }
-    function getEvidenceSubmitDate(uint num) checkEvidenceRange ( num)  public view returns ( uint ){
-        return workEvidence.evidences[num].hireeSubmitDate;
+    function getWorkLogSubmitDate(uint num) checkWorkLogRange ( num)  public view returns ( uint ){
+        return workLogs[num].hireeSubmitDate;
     }
-    function getEvidenceHirerComment(uint num) checkEvidenceRange ( num)  public view returns ( string memory ){
-        return workEvidence.evidences[num].hirerComment;
+    function getWorkLogHirerComment(uint num) checkWorkLogRange ( num)  public view returns ( string memory ){
+        return workLogs[num].hirerComment;
     }
-    function getEvidenceHirerAccepted(uint num) checkEvidenceRange ( num)  public view returns (  bool ){
-        return workEvidence.evidences[num].hirerAccepted;
+    function getWorkLogHirerAccepted(uint num) checkWorkLogRange ( num)  public view returns (  bool ){
+        return workLogs[num].hirerAccepted;
     }
-    function getEvidenceHirerRejected(uint num) checkEvidenceRange ( num)  public view returns (  bool ){
-        return workEvidence.evidences[num].hirerRejected;
+    function getWorkLogHirerRejected(uint num) checkWorkLogRange ( num)  public view returns (  bool ){
+        return workLogs[num].hirerRejected;
     }
+    
     
     function hirerMakePayment(string memory _ecashorder ) public restrictedhirer{
         require(myStatus==STATUS.ACCEPTED, "hirer only make payment after work accepted");

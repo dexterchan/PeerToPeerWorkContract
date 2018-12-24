@@ -6,6 +6,17 @@ import workContractfunc from "../../../ethereum/project";
 
 class WorkLogIndex extends Component{
 
+    static async freshWorkLog(workContract){
+        const numWorkLog= await workContract.methods.getEvidenceCount().call();
+        const workLogs=await Promise.all(
+            Array(parseInt(numWorkLog)).fill()
+            .map(
+                (element, index) => {
+                    return numWorkLog.methods.requests(index).call();
+                }
+            )
+        );
+    }
     static async getInitialProps(props){
         const workContract =workContractfunc(props.query.address);
         
