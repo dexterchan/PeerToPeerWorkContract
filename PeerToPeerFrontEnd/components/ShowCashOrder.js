@@ -68,7 +68,7 @@ class ShowCashOrder extends Component {
                     
 
                     <Form.Field>
-                        <label>Financial institution</label>
+                        <label>eCash Order Encrypted by:</label>
                         <Dropdown placeholder='hirer or hiree' fluid selection options={this.hirerhiree_list} value={this.state.showHirerHiree}
                             onChange={(e, data) => {
                                 this.setState({ showHirerHiree: data.value});

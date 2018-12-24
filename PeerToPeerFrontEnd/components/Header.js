@@ -59,7 +59,7 @@ export default(props)=>{
         <Menu style={{marginTop:"10px"}}>
         
             <Link  route="/">
-                <a className="item">Projects</a>     
+                <a className="item">Work Contract</a>     
             </Link>
             <Menu.Item name='user'>
                 <label>User:</label>
