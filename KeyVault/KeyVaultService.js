@@ -1,6 +1,6 @@
 const config=require("config");
 const path=require("path");
-const debug=require("debug")("app:debug");
+const debug=require("debug")("app:keystoredebug");
 //Configuration
 const SrcKeyStore = config.get("store");
 //load keystore

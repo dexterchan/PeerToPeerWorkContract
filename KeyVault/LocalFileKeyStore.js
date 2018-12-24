@@ -1,10 +1,10 @@
 const config=require("config");
 const path=require("path");
-const fs = require("fs");
-
+const fs = require('fs-extra');
+const debug=require("debug")("app:keystoredebug");
 class MyKeyStore{
     constructor(){
-        this.keyPath="./keys";
+        this.keyPath= path.resolve(__dirname,"keys");
         this.privKeyext= ".privkey.pem";
         this.pubKeyext=".certificate.pem";
     }
@@ -25,6 +25,7 @@ class MyKeyStore{
         return  new Promise((resolve, reject)=>{
             //async work
             const expectedFile = path.join( this.keyPath,acct+this.privKeyext);
+            debug(expectedFile);
             fs.readFile(expectedFile, (err,data)=>{
                 if(err ){
                     reject(new Error(`Failed to retrieve key ${acct} : ${err.message}`));
@@ -39,6 +40,7 @@ class MyKeyStore{
         return  new Promise((resolve, reject)=>{
             //async work
             const expectedFile = path.join( this.keyPath,acct+this.pubKeyext);
+            debug(expectedFile);
             fs.readFile(expectedFile, (err,data)=>{
                 if(err ){
                     reject(new Error(`Failed to retrieve public key ${acct} : ${err.message}`));

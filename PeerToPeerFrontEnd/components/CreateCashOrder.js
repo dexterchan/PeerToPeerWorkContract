@@ -6,16 +6,6 @@ import { Link } from "../routes";
 const fetch = require('node-fetch');
 
 
-const financial_institution_list=[
-    {
-        text: 'bankA',
-        value: 'bankA'
-    },
-    {
-        text: 'bankB',
-        value: 'bankB'
-    }
-];
 
 
 class CreateCashOrder extends Component {

@@ -22,6 +22,71 @@ createOrder=(userid,amount,finEntity)=>{
     return {userid, amount, finEntity,eCashOrderDoc};
 };
 
+const UserEncryptAndBankSignEcashOrder=async (whoEncrypt,finEntity,eCashOrder,callback,errCallback)=>{
+    try{
+        const bankPrivateKey=await KeyVault.privateKeyAsyncPromise(finEntity);
+        const UserPubKey = await KeyVault.publicKeyAsyncPromise(whoEncrypt);
+        errorlog(UserPubKey);
+        const encryptedSignResult=await pubKeyEncryptAndSignECashOrderPromise(eCashOrder,whoEncrypt,UserPubKey,bankPrivateKey);
+        callback(encryptedSignResult);
+    }catch(err){
+        errorlog (err.message);
+        errCallback(new Error(`${finEntity} is not available for service`));
+    }
+};
+
+function pubKeyEncryptAndSignECashOrderPromise (eCashOrder, whoEncrypt, usrPubKey, signPrivateKey){
+    return new Promise((resolve, reject)=>{
+        try{
+            const eCashOrderDoc = eCashOrder.eCashOrderDoc;
+            const pubPkCipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
+            const signPkcipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
+            debug("pkcipher initialized");
+            const symKey = pubPkCipher.generateRandomKey();
+            const sessioncipher= new CipherIVWrapperClass(cipheralgorithm,symKey);
+            debug("sessioncipher initialized");
+    
+            pubPkCipher.setPublicKey(usrPubKey);
+            signPkcipher.setPrivateKey(signPrivateKey);
+            const IV = sessioncipher.IV;
+            debug("key assigned");
+            
+            cipherText = sessioncipher.encryptText(eCashOrderDoc);
+            //sym key encrypt by private key
+            const cipherSymKey = pubPkCipher.publicEncrypt(symKey);
+            cipherText64=Buffer.from(cipherText,"hex").toString("base64");
+            cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+            IV64 = IV.toString("base64");
+    
+            cipherDoc64withMeta={
+                encryptedCashorder:cipherText64,
+                finEntity:eCashOrder.finEntity,
+                owner:eCashOrder.userid,
+                encrypter:whoEncrypt,
+                amount:eCashOrder.amount};
+    
+            debug(JSON.stringify(cipherDoc64withMeta));
+    
+            //Sign the original doc
+            originalCashOrderSig = signPkcipher.signSignature(eCashOrderDoc);
+            originalCashOrderSig64 = Buffer.from(originalCashOrderSig,"hex").toString("base64");
+    
+            //Sign the encrypted doc
+            encryptedCashOrderSig = signPkcipher.signSignature(JSON.stringify(cipherDoc64withMeta));
+            encryptedCashOrderSig64=Buffer.from(encryptedCashOrderSig,"hex").toString("base64");
+    
+            resolve({encryptedCashorder:cipherDoc64withMeta,
+                encryptedSymKey:cipherSymKeyString64,
+                IV:IV64,
+                orgCashorderSignature:originalCashOrderSig64,
+                encryptedCashorderSignature:encryptedCashOrderSig64
+            });
+        }catch(err){
+            reject(err);
+        }
+    });
+};
+
 const bankEncryptAndSignECashOrder=async (finEntity,eCashOrder,callback,errCallback)=>{
     try{
         const bankPrivateKey=await KeyVault.privateKeyAsyncPromise(finEntity);
@@ -38,20 +103,20 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
     return new Promise((resolve, reject)=>{
         try{
             const eCashOrderDoc = eCashOrder.eCashOrderDoc;
-            const pkcipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
+            const signPkcipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
             debug("pkcipher initialized");
-            const symKey = pkcipher.generateRandomKey();
+            const symKey = signPkcipher.generateRandomKey();
             const sessioncipher= new CipherIVWrapperClass(cipheralgorithm,symKey);
             debug("sessioncipher initialized");
     
             
-            pkcipher.setPrivateKey(bankPrivateKey);
+            signPkcipher.setPrivateKey(bankPrivateKey);
             const IV = sessioncipher.IV;
     
             
             cipherText = sessioncipher.encryptText(eCashOrderDoc);
             //sym key encrypt by private key
-            const cipherSymKey = pkcipher.privateEncrypt(symKey);
+            const cipherSymKey = signPkcipher.privateEncrypt(symKey);
             cipherText64=Buffer.from(cipherText,"hex").toString("base64");
             cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
             IV64 = IV.toString("base64");
@@ -65,11 +130,11 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
             debug(JSON.stringify(cipherDoc64withMeta));
     
             //Sign the original doc
-            originalCashOrderSig = pkcipher.signSignature(eCashOrderDoc);
+            originalCashOrderSig = signPkcipher.signSignature(eCashOrderDoc);
             originalCashOrderSig64 = Buffer.from(originalCashOrderSig,"hex").toString("base64");
     
             //Sign the encrypted doc
-            encryptedCashOrderSig = pkcipher.signSignature(JSON.stringify(cipherDoc64withMeta));
+            encryptedCashOrderSig = signPkcipher.signSignature(JSON.stringify(cipherDoc64withMeta));
             encryptedCashOrderSig64=Buffer.from(encryptedCashOrderSig,"hex").toString("base64");
     
             resolve({encryptedCashorder:cipherDoc64withMeta,
@@ -87,3 +152,4 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
 
 module.exports.create=createOrder;
 module.exports.bankEncryptAndSignECashOrder=bankEncryptAndSignECashOrder;
+module.exports.UserEncryptAndBankSignEcashOrder=UserEncryptAndBankSignEcashOrder;

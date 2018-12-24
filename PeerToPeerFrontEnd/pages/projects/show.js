@@ -4,6 +4,10 @@ import projectfunc from "../../ethereum/project";
 import {Card,Grid, Button}  from 'semantic-ui-react'; 
 import web3 from '../../ethereum/web3_query';
 import {Link} from '../../routes';
+import ShowCashOrder from "../../components/ShowCashOrder";
+const myconfig = require("../../config/SystemSetting");
+
+
 
 const StatusMap = require("../../ethereum/WorkContractStatus");
 
@@ -12,6 +16,8 @@ class WorkContractShow extends Component{
         
     static async getInitialProps(props){
         const workContract =projectfunc(props.query.address);
+        const ecashorder_url = myconfig("ecashorder_url");
+        
         const summary={};
 
         const statusNum=await workContract.methods.myStatus().call();
@@ -31,17 +37,38 @@ class WorkContractShow extends Component{
         summary["creationDate"]=new Date(await workContract.methods.creationDate().call() *1000).toLocaleDateString();
         summary["executionDate"]=new Date(await workContract.methods.executionDate().call() *1000);
         
+        summary["hirerEncryptedCashOrder"]=await workContract.methods.hirerEncryptedCashOrder().call();
+        summary["hireeEncryptedCashOrder"]=await workContract.methods.hireeEncryptedCashOrder().call();
+        
         return {
             address:props.query.address,
             myStatus:StatusMap[statusNum],
-            summary
+            summary,
+            ecashorder_url
         };
     }
     constructor(props){
         super(props);
         
+        
+        this.state = {
+            user:"",
+            showCashOrderCreate:true,
+            MyEashOrder:null
+        }
     }
-
+    async componentDidMount(){
+        const accounts = await web3.eth.getAccounts();
+        let user;
+        let summary = this.props.summary;
+        if(summary["hirer"] == accounts[0]){
+            user=summary["hirerName"];
+        }else if(summary["hiree"] == accounts[0]){
+            user=summary["hireeName"];
+        }
+        //console.log(`user:${this.state.user}, account: ${accounts[0]}, hirer: ${summary["hirer"]} `)
+        this.setState({user});
+    }
     renderCards(){
         const{
             hirer,
@@ -92,17 +119,21 @@ class WorkContractShow extends Component{
 
     render(){
         return (
-            <Layout>
+            <Layout user={this.state.user}>
                 <h2>Status: {this.props.myStatus}</h2>
                 <h3>Show Work Contract: {this.props.address} </h3>
                 <Grid>
-                    <Grid.Row>
-                    <Grid.Column width={5}>
+                    <Grid.Row >
+                    <Grid.Column width={10}>
                         {this.renderCards()}
                         
                     </Grid.Column>
-                    <Grid.Column width={3}>
-                    {this.renderCards()}
+                    <Grid.Column width={6} >
+                        <ShowCashOrder
+                            webserviceurl={this.props.ecashorder_url}
+                            hirerEncryptedCashOrder={this.props.summary.hirerEncryptedCashOrder}
+                            hireeEncryptedCashOrder={this.props.summary.hireeEncryptedCashOrder}
+                            />
                     </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>

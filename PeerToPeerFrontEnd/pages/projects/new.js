@@ -65,7 +65,7 @@ class CreateNewProject extends Component{
                 <Form>
                     <Form.Field>
                     <label>eCashOrder retrieved</label>
-                    <TextArea placeholder="eCashOrder" value={JSON.stringify(this.state.MyEashOrder,null,4)}/>
+                    <TextArea placeholder="eCashOrder" value={JSON.stringify(this.state.MyEashOrder,null,4)} rows={12}/>
                     <Button loading={this.state.loading} primary={true} >Next</Button>
                     </Form.Field>
                 </Form>

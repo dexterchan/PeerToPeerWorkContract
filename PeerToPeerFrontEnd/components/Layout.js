@@ -11,8 +11,10 @@ export default(props)=>{
             <head>
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css"></link>
             </head>
+            
             <Header user={props.user}  onUserChange={props.onUserChange}/>
             {props.children}
+            
         </Container>
     );
 };
