@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import Layout from '../../components/Layout';
-import projectfunc from "../../ethereum/project";
+import workContractfunc from "../../ethereum/project";
 import {Card,Grid, Button,Form,Message}  from 'semantic-ui-react'; 
 import web3 from '../../ethereum/web3_query';
 import {Link,Router} from '../../routes';
@@ -13,15 +13,16 @@ const StatusMap = require("../../ethereum/WorkContractStatus");
 
 class WorkContractShow extends Component{
     //running in server
+    static emptyAddress="0x0000000000000000000000000000000000000000";
     
     static async FreshSummary(workContract){
         const summary={};
-
-        summary["myStatus"]=await workContract.methods.myStatus().call();
+        
+        summary["myStatus"]=StatusMap[ await workContract.methods.myStatus().call() ];
         summary["hirer"]=await workContract.methods.hirer().call();
         summary["hirerName"]=await workContract.methods.getMemberName(summary["hirer"]).call();
         summary["hiree"] = await workContract.methods.hiree().call();
-        if(summary["hiree"]=="0x0000000000000000000000000000000000000000"){
+        if(summary["hiree"]==WorkContractShow.emptyAddress){
             summary["hireeName"]="";
         }else{
             summary["hireeName"]=await workContract.methods.getMemberName(summary["hiree"]).call();
@@ -35,38 +36,18 @@ class WorkContractShow extends Component{
         
         summary["hirerEncryptedCashOrder"]=await workContract.methods.hirerEncryptedCashOrder().call();
         summary["hireeEncryptedCashOrder"]=await workContract.methods.hireeEncryptedCashOrder().call();
-        
+        return summary;
     }
 
     static async getInitialProps(props){
-        const workContract =projectfunc(props.query.address);
+        const workContract =workContractfunc(props.query.address);
         const ecashorder_url = myconfig("ecashorder_url");
         
-        const summary={};
+        const summary=await this.FreshSummary(workContract);
 
-        const statusNum=await workContract.methods.myStatus().call();
-        
-        summary["hirer"]=await workContract.methods.hirer().call();
-        summary["hirerName"]=await workContract.methods.getMemberName(summary["hirer"]).call();
-        summary["hiree"] = await workContract.methods.hiree().call();
-        if(summary["hiree"]=="0x0000000000000000000000000000000000000000"){
-            summary["hireeName"]="";
-        }else{
-            summary["hireeName"]=await workContract.methods.getMemberName(summary["hiree"]).call();
-        }
-        
-        summary["task_description"] = await workContract.methods.task_description().call();
-        summary["reward"]=await workContract.methods.reward().call();
-        summary["duration"]=await workContract.methods.duration().call();
-        summary["creationDate"]=new Date(await workContract.methods.creationDate().call() *1000).toLocaleDateString();
-        summary["executionDate"]=new Date(await workContract.methods.executionDate().call() *1000);
-        
-        summary["hirerEncryptedCashOrder"]=await workContract.methods.hirerEncryptedCashOrder().call();
-        summary["hireeEncryptedCashOrder"]=await workContract.methods.hireeEncryptedCashOrder().call();
         
         return {
             address:props.query.address,
-            myStatus:StatusMap[statusNum],
             summary,
             ecashorder_url
         };
@@ -77,16 +58,17 @@ class WorkContractShow extends Component{
         
         this.state = {
             user:"",
-            myStatus:this.props.myStatus,
             loading:false,
-            statusMessage:""
+            statusMessage:"",
+            summary:this.props.summary
         }
+        
     }
     async componentDidMount(){
         const accounts = await web3.eth.getAccounts();
         
         let user;
-        let summary = this.props.summary;
+        let summary = this.state.summary;
         if(summary["hirer"] == accounts[0]){
             user=summary["hirerName"];
         }else if(summary["hiree"] == accounts[0]){
@@ -106,7 +88,7 @@ class WorkContractShow extends Component{
             duration,
             creationDate,
             executionDate
-        }=this.props.summary;
+        }=this.state.summary;
         const items=[
             {
                 header:hirer+":("+hirerName+")",
@@ -139,20 +121,32 @@ class WorkContractShow extends Component{
                 style: {overflowWrap:'break-word'}
             }
         ];
+        if(hiree!=WorkContractShow.emptyAddress){
+            items.push(
+                {
+                    header:hiree+":("+hireeName+")",
+                    meta:"hiree of this contract",
+                    description:"Hiree is workong on this contract",
+                    style: {overflowWrap:'break-word'}
+                }
 
+            );
+        }
         return <Card.Group items={items} />;
     }
 
     takeJob = async(event)=>{
         event.preventDefault();
-        const workContract =projectfunc(this.props.address);
+        const workContract =workContractfunc(this.props.address);
         this.setState({loading:true,statusMessage:""});
         try{
             const accounts = await web3.eth.getAccounts();
             await workContract.methods.hireeTakeJob().
                 send({from:accounts[0] });
             //this.setState({loading:false});
-            Router.pushRoute(`/workcontract/${this.props.address}`);
+            const summary=await WorkContractShow.FreshSummary(workContract);
+            this.setState({summary:summary});
+            //Router.pushRoute(`/workcontract/${this.props.address}`);
         }catch(ex){
             console.log(ex);
             this.setState({statusMessage:ex.message})
@@ -161,11 +155,30 @@ class WorkContractShow extends Component{
         }
 
     }
+    testRefresh=async(event)=>{
+        event.preventDefault();
+        const workContract =workContractfunc(this.props.address);
+        this.setState({loading:true,statusMessage:""});
+        try{
+            const accounts = await web3.eth.getAccounts();
+            
+            const summary=await WorkContractShow.FreshSummary(workContract);
+            this.setState({summary:summary});
+            //Router.pushRoute(`/workcontract/${this.props.address}`);
+
+        }catch(ex){
+            console.log(ex);
+            this.setState({statusMessage:ex.message})
+        }finally{
+            this.setState({loading:false});
+        }
+        console.log(this.state.summary);
+    }
 
     render(){
         return (
             <Layout user={this.state.user}>
-                <h2>Status: {this.state.myStatus}</h2>
+                <h2>Status: {this.state.summary.myStatus}</h2>
                 <h3>Show Work Contract: {this.props.address} </h3>
                 <Grid>
                     <Grid.Row >
@@ -183,7 +196,7 @@ class WorkContractShow extends Component{
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column>
-                            {this.state.myStatus == "PROCUREMENT" ?
+                            {this.state.summary.myStatus == "PROCUREMENT" ?
                                 <Form error={this.state.statusMessage.length>0} >
                                 <Button primary onClick={this.takeJob} loading={this.state.loading}> 
                                     Take Job
@@ -191,9 +204,9 @@ class WorkContractShow extends Component{
                                 <Message error header="oops!" content={this.state.statusMessage} />
                                 </Form>
                                 :
-                                <Link route={`/workcontract/${this.props.address}/evidence`}>
-                                    <a>
-                                        <Button primary>
+                                <Link route={`/workcontract/${this.props.address}/worklog`}>
+                                   <a>
+                                        <Button primary >
                                             View work evidences
                                         </Button>
                                     </a>
