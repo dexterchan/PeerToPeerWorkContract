@@ -33,6 +33,7 @@ class ShowCashOrder extends Component {
             loading:false,
             currentECashOrder:""
         };
+        
         this.webserviceurl = this.props.webserviceurl;
         debug(`URL of webservice:${this.webserviceurl})`);
     }
@@ -44,15 +45,16 @@ class ShowCashOrder extends Component {
     }
     
     getCurrentECashOrder=(hirerhiree)=>{
-        return (hirerhiree == "hirer") ?
+        return ((hirerhiree == "hirer") ?
         JSON.stringify(
             this.state.hirerEncryptedCashOrder, null, 4) :
         JSON.stringify(
-            this.state.hireeEncryptedCashOrder, null, 4);
+            this.state.hireeEncryptedCashOrder, null, 4)).replace(/\\\"/g,"\"").replace(/\"{/,"{").replace(/}\"/,"}");
     }
 
     onValidate=async (event)=>{
         console.log("Validate:",this.state.currentECashOrder );
+        
     };
 
 
@@ -80,10 +82,11 @@ class ShowCashOrder extends Component {
                         <label>eCashOrder retrieved</label>
                         <TextArea placeholder="eCashOrder" value={
                             //this.getCurrentECashOrder(this.state.showHirerHiree)
-                            this.state.currentECashOrder
+                            this.state.currentECashOrder.replace(/\\\"/g,"\"")
                         }
                         style={{overflowWrap:'nowrap'}}
                         rows={12}
+                        
                         onChange={(e,data)=>{
                             this.setState({currentECashOrder:data.value});
                         }}

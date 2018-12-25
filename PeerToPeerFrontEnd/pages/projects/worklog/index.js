@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../../../components/Layout";
+import WorkLogRow from "../../../components/WorkLogRow";
 import {Table, Button,TextArea,Input, Label}  from 'semantic-ui-react'; 
 import {Link} from "../../../routes";
 import workContractfunc from "../../../ethereum/project";
@@ -16,35 +17,68 @@ class WorkLogIndex extends Component{
                 }
             )
         );
-        return workLogs;
+        const workAccepted = await workContract.methods.workAccepted().call();
+
+        return {workLogs,workAccepted};
     }
     static async getInitialProps(props){
         const workContract =workContractfunc(props.query.address);
-        const workLogs=await WorkLogIndex.freshWorkLog(workContract);
+        const {workLogs,workAccepted}=await WorkLogIndex.freshWorkLog(workContract);
         
         return {
             address:props.query.address,
-            workLogs
+            workLogs,workAccepted
         };
+    }
+
+    async updateMyWorkLog(workContract){
+        const {workLogs,workAccepted}=await WorkLogIndex.freshWorkLog(workContract);
+        this.setState({workLogs,workAccepted});
+        console.log(this.state.workLogs);
     }
 
     constructor(props){
         super(props);
         this.state={
-            address:this.props.address,
-            workLogs:this.props.workLogs
+            //address:this.props.address,
+            workLogs:this.props.workLogs,
+            workAccepted:this.props.workAccepted
         };
+        console.log("Work accepted:",this.state.workAccepted);
     }
 
     componentDidMount(){
-        console.log(this.state.workLogs);
+        //console.log(this.state.workLogs);
     }
 
+    renderWorkLogRow(){
+        return this.state.workLogs.map(
+            (wklog,index) =>{
+                return <WorkLogRow
+                    key={index} //key as required in JSX 
+                    ID={index}
+                    workLog={wklog}
+                    address={this.props.address}
+                    callback={this.updateMyWorkLog}
+                />
+            }
+        );
+    }
     render(){
         const {Header, Row, HeaderCell, Body}=Table;
         return(
+
             <Layout>
-                <h3>Work log</h3>
+                <Link route={`/workcontract/${this.props.address}`}>
+                    <a>
+                        &lt;&lt;Back
+                </a>
+                </Link>
+                <h3>Work log </h3>
+                {this.state.workAccepted?
+                    <Label color="green">ACCEPTED</Label>:
+                    <Label color="olive">On going</Label>
+                }
                 <Label>Contract address: {this.props.address}</Label>
 
                 <Table>
@@ -53,12 +87,13 @@ class WorkLogIndex extends Component{
                         <HeaderCell>Description</HeaderCell>
                         <HeaderCell>hiree Submit Date</HeaderCell>
                         <HeaderCell>hirer comment</HeaderCell>
-                        <HeaderCell>Accept</HeaderCell>
-                        <HeaderCell>Reject</HeaderCell>
+                        <HeaderCell>status</HeaderCell>
+                        
+                        <HeaderCell>Action</HeaderCell>
                     </Row>
                 </Header>
                 <Body>
-                    
+                    {this.renderWorkLogRow()}
                 </Body>
             </Table>
             </Layout>

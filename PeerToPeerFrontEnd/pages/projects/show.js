@@ -32,7 +32,7 @@ class WorkContractShow extends Component{
         summary["reward"]=await workContract.methods.reward().call();
         summary["duration"]=await workContract.methods.duration().call();
         summary["creationDate"]=new Date(await workContract.methods.creationDate().call() *1000).toLocaleDateString();
-        summary["executionDate"]=new Date(await workContract.methods.executionDate().call() *1000);
+        summary["executionDate"]=new Date(await workContract.methods.executionDate().call() *1000).toLocaleDateString();
         
         summary["hirerEncryptedCashOrder"]=await workContract.methods.hirerEncryptedCashOrder().call();
         summary["hireeEncryptedCashOrder"]=await workContract.methods.hireeEncryptedCashOrder().call();
@@ -189,8 +189,8 @@ class WorkContractShow extends Component{
                     <Grid.Column width={6} >
                         <ShowCashOrder
                             webserviceurl={this.props.ecashorder_url}
-                            hirerEncryptedCashOrder={this.props.summary.hirerEncryptedCashOrder}
-                            hireeEncryptedCashOrder={this.props.summary.hireeEncryptedCashOrder}
+                            hirerEncryptedCashOrder={this.state.summary.hirerEncryptedCashOrder}
+                            hireeEncryptedCashOrder={this.state.summary.hireeEncryptedCashOrder}
                             />
                     </Grid.Column>
                     </Grid.Row>
@@ -207,7 +207,7 @@ class WorkContractShow extends Component{
                                 <Link route={`/workcontract/${this.props.address}/worklog`}>
                                    <a>
                                         <Button primary >
-                                            View work evidences
+                                            View work logs
                                         </Button>
                                     </a>
                                 </Link>
