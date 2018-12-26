@@ -2,7 +2,7 @@ import React, { Component } from "react";
 const debug = require("debug")("app:DEBUG");
 
 import { Dropdown, Button, Form, Message, Label, Input ,TextArea} from 'semantic-ui-react';
-import { Link } from "../routes";
+import { Link,Router } from "../routes";
 const fetch = require('node-fetch');
 
 
@@ -31,11 +31,13 @@ class ShowCashOrder extends Component {
             statusMessage:"",
             showHirerHiree:"hirer",
             loading:false,
-            currentECashOrder:""
+            currentECashOrder:"",
+            depositContract:this.props.depositContract
         };
         
         this.webserviceurl = this.props.webserviceurl;
         debug(`URL of webservice:${this.webserviceurl})`);
+        
     }
     
     componentDidMount() {
@@ -53,9 +55,15 @@ class ShowCashOrder extends Component {
     }
 
     onValidate=async (event)=>{
+        event.preventDefault();
         console.log("Validate:",this.state.currentECashOrder );
         
     };
+
+    onDeposit = async(event)=>{
+        event.preventDefault();
+        Router.pushRoute(`/workcontract/${this.props.address}/finance/${this.props.mystatus}`);
+    }
 
 
     
@@ -91,7 +99,10 @@ class ShowCashOrder extends Component {
                             this.setState({currentECashOrder:data.value});
                         }}
                          />
-                        <Button loading={this.state.loading} primary={true} onClick={this.onValidate} >Validate it!</Button>
+                        <Button floated="left" loading={this.state.loading} primary={true} onClick={this.onValidate} >Validate it!</Button>
+                        <Button  floated="right"  disabled={!(this.state.depositContract==this.state.showHirerHiree) } onClick={this.onDeposit}>
+                            Deposit Contract
+                        </Button>
                     </Form.Field>
                     
                     

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Table,Button,TextArea}  from 'semantic-ui-react'; 
 import web3 from "../ethereum/web3_query";
 import workContractfunc from "../ethereum/project";
+import WorkLogIndex from "../pages/projects/worklog/index";
 
 class WorkLogRow extends Component{
 
@@ -27,7 +28,11 @@ class WorkLogRow extends Component{
                 { from: hirerAddress }
             );
             //Router.pushRoute(`/workcontract/${this.props.address}/worklog`);
-            await this.props.callback(workContract);
+
+            const { workLogs, workAccepted } = await WorkLogIndex.freshWorkLog(
+                workContract
+              );
+            await this.props.callback(workLogs, workAccepted);
         }catch(err){
             console.log(err.message);
         }finally{

@@ -6,9 +6,6 @@ import web3 from '../../ethereum/web3_query';
 import {Link,Router} from '../../routes';
 import ShowCashOrder from "../../components/ShowCashOrder";
 const myconfig = require("../../config/SystemSetting");
-
-
-
 const StatusMap = require("../../ethereum/WorkContractStatus");
 
 class WorkContractShow extends Component{
@@ -175,6 +172,16 @@ class WorkContractShow extends Component{
         console.log(this.state.summary);
     }
 
+    showContractDeposit(){
+        if(this.state.summary.myStatus=="NEW" ){
+            return "hirer";
+        }else if(this.state.summary.myStatus=="PAYMENT"){
+            return "hiree";
+        }else{
+            return "";
+        }
+    }
+
     render(){
         return (
             <Layout user={this.state.user}>
@@ -191,6 +198,9 @@ class WorkContractShow extends Component{
                             webserviceurl={this.props.ecashorder_url}
                             hirerEncryptedCashOrder={this.state.summary.hirerEncryptedCashOrder}
                             hireeEncryptedCashOrder={this.state.summary.hireeEncryptedCashOrder}
+                            depositContract = {this.showContractDeposit()}
+                            address = {this.props.address}
+                            mystatus={this.state.summary.myStatus}
                             />
                     </Grid.Column>
                     </Grid.Row>

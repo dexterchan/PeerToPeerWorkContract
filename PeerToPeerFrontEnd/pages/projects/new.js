@@ -4,74 +4,98 @@ import Layout from "../../components/Layout";
 const debug = require("debug")("app:DEBUG");
 const myconfig = require("../../config/SystemSetting");
 
-import { Dropdown,TextArea,Button,Form} from 'semantic-ui-react';
-/*
-export default()=>{
-    return (
+import factory from "../../ethereum/factory";
+import web3 from "../../ethereum/web3_query";
+import { Message,TextArea,Button,Form,Input} from 'semantic-ui-react';
 
-        <h1>new project</h1>
-
-    );
-};*/
+import {Link,Router} from '../../routes';
 
 
 class CreateNewProject extends Component{
-    userOptions = [
-        {
-            text: 'hirer',
-            value: 'hirer'
-        },
-        {
-            text: 'hiree',
-            value: 'hiree'
-        }
-    ];
-    static async getInitialProps(){
-        //running in server
-        const ecashorder_url = myconfig("ecashorder_url");
-        
-        debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
-        
-        return {ecashorder_url};
-    }
+    
+    
     constructor(props){
         super(props);
         this.state = {
-            user:"hirer",
-            showCashOrderCreate:true,
-            MyEashOrder:null
+            statusMessage: "",
+            loading: false,
+            task_des:"",
+            reward:0,
+            accepthireeMinCredit:0,
+            duration:"",
+            feedback:"",
+            finish:false
         }
     }
 
+    onSubmit=async(event)=>{
+        event.preventDefault();
+        try {
+            this.setState({ loading: true, statusMessage: "" });
+            const accounts = await web3.eth.getAccounts();
+            //console.log(factory);
+            const retObj=await factory.methods.createProject(
+                this.state.task_des,
+                this.state.reward,
+                this.state.accepthireeMinCredit,
+                this.state.duration
+            ).send(
+                {
+                    from: accounts[0]
+                }
+            );
+            const txnHash=retObj.transactionHash;
+            
+            this.setState({finish:true,feedback:`Please check details in https://rinkeby.etherscan.io/tx/${txnHash}`});
+        }catch(ex){
+            this.setState({statusMessage:ex.message});
+        }finally{
+            this.setState({ loading: false });
+        }
+    };
     
 
     render(){
         return (
             <Layout user={this.state.user}  onUserChange={
                 (user)=>{
-                    this.setState({user} );
                 }
             } >
-            
-                
-                {this.state.showCashOrderCreate ? 
-                <CreateCashOrder user={this.state.user} onECashOrderFinish={
-                    (eCashOrder)=>{
-                        this.setState({MyEashOrder:eCashOrder,showCashOrderCreate:false} );
-                    }
-                }
-                webserviceurl={this.props.ecashorder_url}
-                /> : 
-                <Form>
+
+            <h3>Create a new Work Contract</h3>
+
+                <Form onSubmit={this.onSubmit}
+                error={this.state.statusMessage.length > 0}>
                     <Form.Field>
-                    <label>eCashOrder retrieved</label>
-                    <TextArea placeholder="eCashOrder" value={JSON.stringify(this.state.MyEashOrder,null,4)} rows={12}/>
-                    <Button loading={this.state.loading} primary={true} >Next</Button>
+                        <label>Create a new Work Contract</label>
+                        <TextArea placeholder="Task description" value={this.state.task_des} rows={12} 
+                        onChange={event=>{this.setState({task_des:event.target.value})}}/>
+                        
                     </Form.Field>
+
+                    <Form.Field>
+                        <label>Reward</label>
+                        <Input placeholder="Reward in dollors" value={this.state.reward} 
+                         onChange={event=>{this.setState({reward:event.target.value})}}/>
+                    </Form.Field>
+
+                    <Form.Field>
+                        <label>Accept hiree with minimum credit</label>
+                        <Input placeholder="only accept hiree with minimum credit (value>0)" value={this.state.accepthireeMinCredit} 
+                         onChange={event=>{this.setState({accepthireeMinCredit:event.target.value})}}/>
+                    </Form.Field>
+                    <Form.Field>
+                        <label>Expected task duration</label>
+                        <Input placeholder="time duration in days/weeks/months" value={this.state.duration} 
+                         onChange={event=>{this.setState({duration:event.target.value})}}/>
+                    </Form.Field>
+                    <Button loading={this.state.loading} primary={true} disabled={this.state.finish}>Confirm</Button>
+                    <Message error header="oops!" content={this.state.statusMessage} />
+                    <Message color="grey" content={this.state.feedback} hidden={this.state.feedback.length==0} />
                 </Form>
-                }
 
 
+                
             </Layout>
         );
     }

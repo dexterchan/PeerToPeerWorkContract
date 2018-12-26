@@ -70,10 +70,11 @@ beforeEach(
         );
         const addresses=await factory.methods.getDeployedProjects().call();
         projectAddress=addresses[0];
-        /*
-        console.log("returned object:"+retObj);
-        console.log("readaddress:"+addresses[0]);
-        */
+        
+        
+        console.log("returned object:"+(retObj.transactionHash));
+        //console.log("readaddress:"+addresses[0]);
+        
         project=await new web3.eth.Contract(
             compiledProjectABI
             ,projectAddress);
