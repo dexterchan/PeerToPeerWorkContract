@@ -8,7 +8,8 @@ const eCashOrderBackEndCreate=require("../routes/eCashOrderBackend").create;
 
 const {bankEncryptAndSignECashOrder,
     UserEncryptAndBankSignEcashOrder,
-    UserVerifyECashOrderSignature}=require("../routes/eCashOrderBackend");
+    UserVerifyECashOrderSignature,
+    UserDecryptCashOrder}=require("../routes/eCashOrderBackend");
 
 
 const URL = "http://localhost:8001/api/ecashorder";
@@ -93,8 +94,8 @@ describe("Test Encrypt Decrypt backend",()=>{
         const cashorder= eCashOrderBackEndCreate(data.userid,data.amount,data.finEntity);
         
         var encryptedEcashorderText=await createEncryptedCashOrderPromise(data.userid,data.finEntity,cashorder);
-        encryptedEcashorderText.encryptedCashorder.amount=0;
-        data.amount=0;
+        //encryptedEcashorderText.encryptedCashorder.amount=0;
+        //data.amount=0;
         //Travel 
         encryptedEcashorderText=JSON.stringify(encryptedEcashorderText);
         //console.log(encryptedEcashorderText);
@@ -111,6 +112,30 @@ describe("Test Encrypt Decrypt backend",()=>{
                 console.log("not ok",err);
                 assert.fail(err);
             });
+
+    });
+
+    it("Test CashOrder decrypt", async()=>{
+        data={
+            userid:"hirer",
+            finEntity:"bankA",
+            amount:100,
+            DepositOrLoan:true
+        };
+        const cashorder= eCashOrderBackEndCreate(data.userid,data.amount,data.finEntity);
+        
+        var encryptedEcashorderText=await createEncryptedCashOrderPromise(data.userid,data.finEntity,cashorder);
+        encryptedEcashorderText=JSON.stringify(encryptedEcashorderText);
+        const encryptedEcashorderJSON = JSON.parse(encryptedEcashorderText);
+        console.log(encryptedEcashorderJSON);
+        UserDecryptCashOrder(encryptedEcashorderJSON,
+            (result)=>{
+                console.log(result);
+            },
+            (err)=>{
+                console.log(err);
+            }
+            );
 
     });
 });

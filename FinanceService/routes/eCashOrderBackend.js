@@ -22,6 +22,8 @@ createOrder=(userid,amount,finEntity)=>{
     return {userid, amount, finEntity,eCashOrderDoc};
 };
 
+
+
 const UserEncryptAndBankSignEcashOrder=async (whoEncrypt,finEntity,eCashOrder,callback,errCallback)=>{
     try{
         const bankPrivateKey=await KeyVault.privateKeyAsyncPromise(finEntity);
@@ -55,6 +57,42 @@ const UserVerifyECashOrderSignature=async (eCashOrder,amount,callback,errCallbac
         errorlog(err.message);
         errCallback(new Error(err.message));
     }
+}
+
+const UserDecryptCashOrder=async(eCashOrder,callback,errCallback)=>{
+    try{
+        const {encryptedCashorder} = eCashOrder;
+        encrypter = encryptedCashorder.encrypter;
+        const usrPrivateKey=await KeyVault.privateKeyAsyncPromise(encrypter);
+        const decryptedResult = await privateKeyDecryptEcashOrderPromise(eCashOrder,usrPrivateKey);
+        callback(decryptedResult);
+    }catch(err){
+        errorlog(err.message);
+        errCallback(new Error(err.message));
+    }
+}
+
+function privateKeyDecryptEcashOrderPromise(eCashOrder, usrPrivateKey){
+    return new Promise ((resolve,reject)=>{
+        try{
+            const {encryptedSymKey,encryptedCashorder,IV}=eCashOrder;
+            const privatePkCipher = new pkeyCipherWrapperClass(cipheralgorithm, signAlgorithm);
+            privatePkCipher.setPrivateKey(usrPrivateKey);
+
+            const cipherDocHex =  Buffer.from(encryptedCashorder.encryptedCashorder,"base64").toString("hex");
+            const cipherSymKeyHex = Buffer.from(encryptedSymKey,"base64").toString("hex");
+            const IVHex=Buffer.from(IV,"base64");
+
+
+            const decryptedKey = privatePkCipher.privateDecrypt(cipherSymKeyHex);
+            const mydecipher= new CipherIVWrapperClass(cipheralgorithm,decryptedKey,IVHex);
+            //decrypted symkey decrypt cipher text
+            const decruptedText=mydecipher.decryptText(cipherDocHex);
+            resolve(decruptedText);
+        }catch(ex){
+            reject(ex);
+        }
+    });
 }
 
 function pubKeyVerifyEcashOrderSignaturePromise(cipherDoc64withMeta,encryptedCashorderSignature,bankPubKey){
@@ -193,3 +231,4 @@ module.exports.create=createOrder;
 module.exports.bankEncryptAndSignECashOrder=bankEncryptAndSignECashOrder;
 module.exports.UserEncryptAndBankSignEcashOrder=UserEncryptAndBankSignEcashOrder;
 module.exports.UserVerifyECashOrderSignature=UserVerifyECashOrderSignature;
+module.exports.UserDecryptCashOrder=UserDecryptCashOrder;

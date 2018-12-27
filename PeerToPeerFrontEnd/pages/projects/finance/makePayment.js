@@ -8,7 +8,7 @@ import { Link, Router } from "../../../routes";
 const debug = require("debug")("app:DEBUG");
 const myconfig = require("../../../config/SystemSetting");
 
-import { Message, TextArea, Button, Grid } from "semantic-ui-react";
+import { Message, TextArea, Button, Grid, Form } from "semantic-ui-react";
 const StatusMap = require("../../../ethereum/WorkContractStatus");
 
 class MakePayment extends Component {
@@ -41,7 +41,7 @@ class MakePayment extends Component {
     //running in server
     const workContract = workContractfunc(props.query.address);
     const ecashorder_url = myconfig("ecashorder_url");
-    const summary = undefined; //await this.FreshSummary(workContract);
+    const summary = await MakePayment.FreshSummary(workContract);
 
     debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
     const address = props.query.address;
@@ -55,13 +55,70 @@ class MakePayment extends Component {
       user: "",
       loading: false,
       statusMessage: "",
-      summary: this.props.summary
+      summary: this.props.summary,
+      hireeEncryptedCashOrder: ""
     };
   }
+
+  onPayment=async (event)=>{
+    event.preventDefault();
+
+  };
+
   render() {
     return (
       <Layout user={this.state.user}>
-        <h3>Make Payment to hiree!!!</h3>
+        <h3>Make Payment to hiree</h3>
+        <Grid divided="vertically">
+          <Grid.Row columns={2}>
+          <Button
+              fluid
+              loading={this.state.loading}
+              primary
+              textAlign='center'
+              onClick={this.onPayment}
+            >
+            Transfer eCashorder ownership to hiree->
+            </Button>
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <Grid.Column>
+              <Form>
+                <Form.Field>
+                  <label>hirer encryted eCashorder</label>
+                  <TextArea
+                    placeholder="hirer eCashOrder"
+                    value={this.state.summary.hirerEncryptedCashOrder.replace(
+                      /\\\"/g,
+                      '"'
+                    )}
+                    //style={{ overflowWrap: "nowrap" }}
+                    rows={12}
+                    onChange={(e, data) => {}}
+                  />
+                </Form.Field>
+              </Form>
+            </Grid.Column>
+
+            <Grid.Column>
+              <Form>
+                <Form.Field>
+                  <label>hiree encryted eCashorder</label>
+                  <TextArea
+                    placeholder="hiree eCashOrder"
+                    value={this.state.hireeEncryptedCashOrder.replace(
+                      /\\\"/g,
+                      '"'
+                    )}
+                    style={{ overflowWrap: "nowrap" }}
+                    rows={12}
+                    onChange={(e, data) => {}}
+                  />
+                </Form.Field>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Layout>
     );
   }
