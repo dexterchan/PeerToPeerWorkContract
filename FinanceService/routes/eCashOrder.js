@@ -6,7 +6,9 @@ const debug=require("debug")("app:debug");
 const KeyVault = require("../../KeyVault/KeyVaultService");
 const eCashOrderBackEndCreate=require("./eCashOrderBackend").create;
 
-const {bankEncryptAndSignECashOrder,UserEncryptAndBankSignEcashOrder}=require("./eCashOrderBackend");
+const {bankEncryptAndSignECashOrder,
+    UserEncryptAndBankSignEcashOrder,
+    UserVerifyECashOrderSignature}=require("./eCashOrderBackend");
 
 
 
@@ -48,6 +50,22 @@ router.post("/",(req,res)=>{
     
 }
 );
+router.post("/verifysignature",(req,res)=>{
+    requestJSON=req.body;
+    UserVerifyECashOrderSignature(requestJSON,requestJSON.encryptedCashorder.amount,
+        (result)=>{
+            let flag="invalid";
+            if(result){
+                flag="valid";
+            }
+            res.send({result:flag});
+        },
+        (err)=>{
+            res.status(400).send({result:"error in signature verify"});
+        }
+        );
+
+});
 
 
 

@@ -186,6 +186,15 @@ class WorkContractShow extends Component{
         return (
             <Layout user={this.state.user}>
                 <h2>Status: {this.state.summary.myStatus}</h2>
+                {
+                    this.state.summary.myStatus=="ACCEPTED"?
+                        <Link route={`/workcontract/${this.props.address}/finance/payment`}>
+                            <a>
+                                <Button color="green" >Proceed to payment</Button>
+                            </a>
+                        </Link>
+                    :""
+                }
                 <h3>Show Work Contract: {this.props.address} </h3>
                 <Grid>
                     <Grid.Row >

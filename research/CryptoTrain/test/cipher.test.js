@@ -72,6 +72,7 @@ describe("Test Cipher",()=>{
             const s=pkcipher.signSignature(inputText);
             
             const result = pkcipher.verifySignature(inputText,s);
+            console.log("Verify signature",result);
             assert(result);
         });
         it("test signature negative", ()=>{

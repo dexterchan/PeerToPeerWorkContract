@@ -6,6 +6,7 @@ routes
     .add("/workcontract/:address","projects/show")
     .add("/workcontract/:address/worklog","/projects/worklog/index")
     .add("/workcontract/:address/worklog/new","/projects/worklog/new")
-    .add("/workcontract/:address/finance/:status","/projects/finance/new");
+    .add("/workcontract/:address/finance/new","/projects/finance/new")
+    .add("/workcontract/:address/finance/payment","/projects/finance/makePayment");
 
 module.exports=routes;

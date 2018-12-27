@@ -26,8 +26,8 @@ class CreateNewDeposit extends Component {
 
     debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
     const address = props.query.address;
-    const status = props.query.status;
-    return { ecashorder_url ,address,status};
+    
+    return { ecashorder_url ,address};
   }
   constructor(props) {
     super(props);
@@ -38,8 +38,8 @@ class CreateNewDeposit extends Component {
       MyEashOrder: null,
       statusMessage: "",
       loading: false,
-      address: this.props.address,
-      status: this.props.status
+      address: this.props.address
+      ,disableCommit:false
     };
   }
 
@@ -50,18 +50,19 @@ class CreateNewDeposit extends Component {
     //console.log("address:",this.props.address);
     try {
       const accounts = await web3.eth.getAccounts();
-      let strNewECashOrder = JSON.stringify(this.state.MyEashOrder, null, 4);
+      //let strNewECashOrder = JSON.stringify(this.state.MyEashOrder, null, 4);
+      let strNewECashOrder = JSON.stringify(this.state.MyEashOrder);
       const workContract = workContractfunc(this.props.address);
       await workContract.methods
         .deployCashOrder(strNewECashOrder)
         .send({ from: accounts[0] });
 
-      Router.pushRoute(`/workcontract/${this.props.address}`);
+      Router.replace(`/workcontract/${this.props.address}`);
     } catch (ex) {
       console.log(ex);
       this.setState({ statusMessage: ex.message });
     } finally {
-      this.setState({ loading: false });
+      this.setState({ loading: false ,disableCommit:true});
     }
   };
 
@@ -92,6 +93,7 @@ class CreateNewDeposit extends Component {
                 loading={this.state.loading}
                 primary={true}
                 onClick={this.onDepositContract}
+                disabled={this.disableCommit}
               >
                 Next
               </Button>

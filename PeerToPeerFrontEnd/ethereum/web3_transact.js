@@ -1,5 +1,6 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
+const config =require("config");
 
 const provider = new HDWalletProvider(
     'answer margin gallery suit decide tonight custom crisp eternal modify tiger huge',
