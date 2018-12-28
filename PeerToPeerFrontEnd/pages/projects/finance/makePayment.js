@@ -50,20 +50,56 @@ class MakePayment extends Component {
   }
   constructor(props) {
     super(props);
-
+    this.webserviceurl = this.props.ecashorder_url;
     this.state = {
       user: "",
       loading: false,
+      commitLoading: false,
       statusMessage: "",
       summary: this.props.summary,
-      hireeEncryptedCashOrder: ""
+      hireeEncryptedCashOrder: "",
+      showCommit:false
     };
   }
 
-  onPayment=async (event)=>{
+  onPayment = async event => {
     event.preventDefault();
+    this.setState({loading:true});
+    const payee = this.state.summary.hireeName;
+    const URL = `${this.webserviceurl}/changeowner/${payee}`; //"http://localhost:8001/api/ecashorder";//config.get("ecashorder");
 
+    const eCashOrderJSON = JSON.parse(
+      this.state.summary.hirerEncryptedCashOrder.replace(/\\\"/g, '"')
+    );
+
+    const response = await fetch(URL, {
+      method: "POST",
+      //mode: 'CORS', not using cross-fetch
+      body: JSON.stringify(eCashOrderJSON),
+      headers: { "Content-Type": "application/json" }
+    });
+    const hireeEncryptedCashOrder = JSON.stringify(await response.json());
+
+    this.setState({ hireeEncryptedCashOrder,loading:false ,showCommit:true});
   };
+
+  onCommit = async (event)=>{
+    event.preventDefault();
+    this.setState({statusMessage:"",commitLoading:true});
+    try {
+      const accounts = await web3.eth.getAccounts();
+      const workContract = workContractfunc(this.props.address);
+      await workContract.methods
+        .hirerMakePayment( this.state.hireeEncryptedCashOrder)
+        .send({ from: accounts[0] });
+
+      Router.replace(`/workcontract/${this.props.address}`);
+    }catch(ex){
+      this.setState({statusMessage:ex.message});
+    }finally{
+      this.setState({ commitLoading:false })
+    }
+  }
 
   render() {
     return (
@@ -71,14 +107,14 @@ class MakePayment extends Component {
         <h3>Make Payment to hiree</h3>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
-          <Button
+            <Button
               fluid
               loading={this.state.loading}
               primary
-              textAlign='center'
+              textAlign="center"
               onClick={this.onPayment}
             >
-            Transfer eCashorder ownership to hiree->
+              Transfer eCashorder ownership to hiree->
             </Button>
           </Grid.Row>
           <Grid.Row columns={2}>
@@ -116,6 +152,25 @@ class MakePayment extends Component {
                   />
                 </Form.Field>
               </Form>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              {this.state.showCommit?
+                <Form error={this.state.statusMessage.length>0 } visible={this.state.showCommit}>
+                <Button
+                  floated="right"
+                  loading={this.state.commitLoading}
+                  color="green"
+                  onClick={this.onCommit}
+                >
+                  Commit to Contract
+                </Button>
+                <Message error header="oops!" content={this.state.statusMessage} />
+                </Form>
+              :""
+              }
+              
             </Grid.Column>
           </Grid.Row>
         </Grid>

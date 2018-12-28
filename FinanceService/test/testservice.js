@@ -6,10 +6,11 @@ const debug=require("debug")("app:debug");
 const debugdev=require("debug")("app:dev");
 const eCashOrderBackEndCreate=require("../routes/eCashOrderBackend").create;
 
-const {bankEncryptAndSignECashOrder,
+const {
     UserEncryptAndBankSignEcashOrder,
     UserVerifyECashOrderSignature,
-    UserDecryptCashOrder}=require("../routes/eCashOrderBackend");
+    UserDecryptCashOrder,
+    UserChangeSymKeyOwnerShip}=require("../routes/eCashOrderBackend");
 
 
 const URL = "http://localhost:8001/api/ecashorder";
@@ -104,7 +105,7 @@ describe("Test Encrypt Decrypt backend",()=>{
         const encryptedEcashorderJSON = JSON.parse(encryptedEcashorderText);
         UserVerifyECashOrderSignature(encryptedEcashorderJSON,(data.amount).toString(),
             (result)=>{
-                console.log("ok:",result);
+                debugdev("ok:",result);
                 //assert(result);
                 assert(result);
             },
@@ -123,21 +124,60 @@ describe("Test Encrypt Decrypt backend",()=>{
             DepositOrLoan:true
         };
         const cashorder= eCashOrderBackEndCreate(data.userid,data.amount,data.finEntity);
+        //console.log(cashorder);
+        var encryptedEcashorderText=await createEncryptedCashOrderPromise(data.userid,data.finEntity,cashorder);
+        encryptedEcashorderText=JSON.stringify(encryptedEcashorderText);
+        const encryptedEcashorderJSON = JSON.parse(encryptedEcashorderText);
+        //console.log(encryptedEcashorderJSON);
+        UserDecryptCashOrder(encryptedEcashorderJSON,
+            (result)=>{
+                //console.log(result);
+                //console.log(cashorder);
+                assert(result==cashorder.eCashOrderDoc);
+            },
+            (err)=>{
+                //console.log(err);
+                assert.fail(err);
+            }
+            );
+    });
+    
+    it("Test CashOrder changing owner", async()=>{
+        data={
+            userid:"hirer",
+            finEntity:"bankA",
+            amount:100,
+            DepositOrLoan:true
+        };
+        const cashorder= eCashOrderBackEndCreate(data.userid,data.amount,data.finEntity);
         
         var encryptedEcashorderText=await createEncryptedCashOrderPromise(data.userid,data.finEntity,cashorder);
         encryptedEcashorderText=JSON.stringify(encryptedEcashorderText);
         const encryptedEcashorderJSON = JSON.parse(encryptedEcashorderText);
-        console.log(encryptedEcashorderJSON);
-        UserDecryptCashOrder(encryptedEcashorderJSON,
-            (result)=>{
-                console.log(result);
-            },
-            (err)=>{
-                console.log(err);
-            }
-            );
-
+        //debugdev(encryptedEcashorderJSON);
+        UserChangeSymKeyOwnerShip(encryptedEcashorderJSON,"hiree",
+        (changeOwnerResult)=>{
+            //debugdev(changeOwnerResult);
+            
+            UserDecryptCashOrder(changeOwnerResult,
+                (result)=>{
+                    //console.log(result);
+                    //console.log(cashorder);
+                    assert(result==cashorder.eCashOrderDoc);
+                },
+                (err)=>{
+                    //console.log(err);
+                    assert.fail(err);
+                }
+                );
+            
+        },
+        (err)=>{
+            console.log(err);
+            assert.fail(err);
+        });
     });
+    
 });
 
 /*

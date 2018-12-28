@@ -59,12 +59,16 @@ const UserVerifyECashOrderSignature=async (eCashOrder,amount,callback,errCallbac
     }
 }
 
+
+
 const UserDecryptCashOrder=async(eCashOrder,callback,errCallback)=>{
     try{
-        const {encryptedCashorder} = eCashOrder;
-        encrypter = encryptedCashorder.encrypter;
-        const usrPrivateKey=await KeyVault.privateKeyAsyncPromise(encrypter);
+        const {owner} = eCashOrder;
+        
+        const usrPrivateKey=await KeyVault.privateKeyAsyncPromise(owner);
         const decryptedResult = await privateKeyDecryptEcashOrderPromise(eCashOrder,usrPrivateKey);
+        
+        
         callback(decryptedResult);
     }catch(err){
         errorlog(err.message);
@@ -72,12 +76,55 @@ const UserDecryptCashOrder=async(eCashOrder,callback,errCallback)=>{
     }
 }
 
-function privateKeyDecryptEcashOrderPromise(eCashOrder, usrPrivateKey){
+const UserChangeSymKeyOwnerShip=async(eCashOrder,newowner,callback,errCallback)=>{
+    try{
+        const {owner} = eCashOrder;
+        
+        const ownerPrivateKey=await KeyVault.privateKeyAsyncPromise(owner);
+        const newownerPubKey=await KeyVault.publicKeyAsyncPromise(newowner);
+        const changedOwnerResult = await SymKeyChangeOwnerShipPromise(eCashOrder,newowner,ownerPrivateKey,newownerPubKey);
+        
+        
+        callback(changedOwnerResult);
+    }catch(err){
+        errorlog(err.message);
+        errCallback(new Error(err.message));
+    }
+};
+
+
+function SymKeyChangeOwnerShipPromise(eCashOrder, newowner,ownerPrivateKey, newOwnerPubKey){
+    return new Promise ((resolve,reject)=>{
+        try{
+            const {encryptedSymKey,IV}=eCashOrder;
+            const privatePkCipher = new pkeyCipherWrapperClass(cipheralgorithm, signAlgorithm);
+            const pubPkCipher = new pkeyCipherWrapperClass(cipheralgorithm,signAlgorithm);
+            privatePkCipher.setPrivateKey(ownerPrivateKey);
+            pubPkCipher.setPublicKey(newOwnerPubKey);
+
+            const cipherSymKeyHex = Buffer.from(encryptedSymKey,"base64").toString("hex");
+            //const IVHex=Buffer.from(IV,"base64");
+
+            const decryptedKey = privatePkCipher.privateDecrypt(cipherSymKeyHex);
+
+            const cipherSymKey = pubPkCipher.publicEncrypt(decryptedKey);
+            cipherSymKeyString64 = Buffer.from(cipherSymKey,"hex").toString("base64");
+
+            eCashOrder.encryptedSymKey=cipherSymKeyString64;
+            eCashOrder.owner=newowner;
+            resolve(eCashOrder);
+        }catch(ex){
+            reject(ex.message);
+        }
+    });
+}
+
+function privateKeyDecryptEcashOrderPromise(eCashOrder, ownerPrivateKey){
     return new Promise ((resolve,reject)=>{
         try{
             const {encryptedSymKey,encryptedCashorder,IV}=eCashOrder;
             const privatePkCipher = new pkeyCipherWrapperClass(cipheralgorithm, signAlgorithm);
-            privatePkCipher.setPrivateKey(usrPrivateKey);
+            privatePkCipher.setPrivateKey(ownerPrivateKey);
 
             const cipherDocHex =  Buffer.from(encryptedCashorder.encryptedCashorder,"base64").toString("hex");
             const cipherSymKeyHex = Buffer.from(encryptedSymKey,"base64").toString("hex");
@@ -136,8 +183,7 @@ function pubKeyEncryptAndSignECashOrderPromise (eCashOrder, whoEncrypt, usrPubKe
             cipherDoc64withMeta={
                 encryptedCashorder:cipherText64,
                 finEntity:eCashOrder.finEntity,
-                owner:eCashOrder.userid,
-                encrypter:whoEncrypt,
+                from:eCashOrder.userid, 
                 amount:eCashOrder.amount};
     
             //debugdev("TEXT:",JSON.stringify(cipherDoc64withMeta));
@@ -155,6 +201,7 @@ function pubKeyEncryptAndSignECashOrderPromise (eCashOrder, whoEncrypt, usrPubKe
             resolve({encryptedCashorder:cipherDoc64withMeta,
                 encryptedSymKey:cipherSymKeyString64,
                 IV:IV64,
+                owner:whoEncrypt,
                 orgCashorderSignature:originalCashOrderSig64,
                 encryptedCashorderSignature:encryptedCashOrderSig64
             });
@@ -164,6 +211,8 @@ function pubKeyEncryptAndSignECashOrderPromise (eCashOrder, whoEncrypt, usrPubKe
     });
 };
 
+
+/*
 const bankEncryptAndSignECashOrder=async (finEntity,eCashOrder,callback,errCallback)=>{
     try{
         const bankPrivateKey=await KeyVault.privateKeyAsyncPromise(finEntity);
@@ -201,7 +250,7 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
             cipherDoc64withMeta={
                 encryptedCashorder:cipherText64,
                 finEntity:eCashOrder.finEntity,
-                owner:eCashOrder.userid,
+                from:eCashOrder.userid,
                 amount:eCashOrder.amount};
     
             debug(JSON.stringify(cipherDoc64withMeta));
@@ -225,10 +274,12 @@ function encryptAndSignECashOrderPromise (eCashOrder, bankPrivateKey){
         }
     });
 };
-
+*/
 
 module.exports.create=createOrder;
-module.exports.bankEncryptAndSignECashOrder=bankEncryptAndSignECashOrder;
+//module.exports.bankEncryptAndSignECashOrder=bankEncryptAndSignECashOrder;
 module.exports.UserEncryptAndBankSignEcashOrder=UserEncryptAndBankSignEcashOrder;
 module.exports.UserVerifyECashOrderSignature=UserVerifyECashOrderSignature;
 module.exports.UserDecryptCashOrder=UserDecryptCashOrder;
+//module.exports.privateKeyDecryptEcashOrderPromise=privateKeyDecryptEcashOrderPromise;
+module.exports.UserChangeSymKeyOwnerShip=UserChangeSymKeyOwnerShip;

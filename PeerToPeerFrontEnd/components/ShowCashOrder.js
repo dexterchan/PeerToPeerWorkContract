@@ -71,16 +71,14 @@ class ShowCashOrder extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     //console.log("Validate:", this.state.currentECashOrder);
-    const headers = {};
-    headers["Content-Type"] = "application/json";
-
+    
     const URL = this.webserviceurl + "/verifysignature"; //"http://localhost:8001/api/ecashorder";//config.get("ecashorder");
 
     const response = await fetch(URL, {
       method: "POST",
       //mode: 'CORS', not using cross-fetch
       body: this.state.currentECashOrder,
-      headers: headers
+      headers: { "Content-Type": "application/json" }
     });
     this.setState({ loading: false });
 

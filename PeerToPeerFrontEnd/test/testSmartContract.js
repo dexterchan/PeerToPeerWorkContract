@@ -182,5 +182,43 @@ describe("Test Ethereum contract",()=>{
 
             
         });
+
+        it("hiree get paid",async()=>{
+            const newECashOrder=await createEcashOrder();
+            let strNewECashOrder = JSON.stringify(newECashOrder);
+            await project.methods.deployCashOrder(strNewECashOrder).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+            //hireeTakeJob
+
+            await project.methods.hireeTakeJob().send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+            const hiree = await project.methods.hiree().call();
+
+            //hireeSubmitWork
+            const jobdone="JOb is done";
+            await project.methods.hireeSubmitWork(jobdone).send(
+                { from: hireeAddress, gas: 5049200 }
+            );
+
+            //hirer accept work
+            const comment="missing ABC";
+            await project.methods.hirerAcceptWork(comment,false,true).send(
+                { from: hirerAddress, gas: 5049200 }
+            );
+
+            const num = await project.methods.getWorkLogCount().call();
+            const workLogs = await project.methods.workLogs(num-1).call();
+            assert(workLogs.hirerComment,comment);
+            console.log(workLogs);
+            const summary = await project.methods.getWorkContractSummary().call();
+            console.log(summary);
+
+            let date = new Date(summary[9] * 1000);
+            console.log("Convert to date:",date);
+
+            
+        });
 }
 );

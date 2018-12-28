@@ -6,9 +6,10 @@ const debug=require("debug")("app:debug");
 const KeyVault = require("../../KeyVault/KeyVaultService");
 const eCashOrderBackEndCreate=require("./eCashOrderBackend").create;
 
-const {bankEncryptAndSignECashOrder,
+const {
     UserEncryptAndBankSignEcashOrder,
-    UserVerifyECashOrderSignature}=require("./eCashOrderBackend");
+    UserVerifyECashOrderSignature,
+    UserChangeSymKeyOwnerShip}=require("./eCashOrderBackend");
 
 
 
@@ -62,6 +63,20 @@ router.post("/verifysignature",(req,res)=>{
         },
         (err)=>{
             res.status(400).send({result:"error in signature verify"});
+        }
+        );
+
+});
+router.post("/changeowner/:newid",(req,res)=>{
+    const newUserId=req.params.newid;
+    requestJSON=req.body;
+    UserChangeSymKeyOwnerShip(requestJSON,newUserId,
+        (result)=>{
+            
+            res.send(result);
+        },
+        (err)=>{
+            res.status(400).send({result:"error in change ownership"});
         }
         );
 

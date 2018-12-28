@@ -59,7 +59,7 @@ class CreateNewDeposit extends Component {
 
       Router.replace(`/workcontract/${this.props.address}`);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
       this.setState({ statusMessage: ex.message });
     } finally {
       this.setState({ loading: false ,disableCommit:true});
