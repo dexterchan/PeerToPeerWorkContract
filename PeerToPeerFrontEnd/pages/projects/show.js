@@ -193,6 +193,13 @@ class WorkContractShow extends Component{
                                 <Button color="green" >Proceed to payment</Button>
                             </a>
                         </Link>
+                    :
+                    this.state.summary.myStatus=="PAYMENT"?
+                        <Link route={`/workcontract/${this.props.address}/getEcashOrder`}>
+                            <a>
+                                <Button color="green" >Get EcashOrder</Button>
+                            </a>
+                        </Link>
                     :""
                 }
                 <h3>Show Work Contract: {this.props.address} </h3>

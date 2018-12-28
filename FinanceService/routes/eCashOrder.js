@@ -9,7 +9,8 @@ const eCashOrderBackEndCreate=require("./eCashOrderBackend").create;
 const {
     UserEncryptAndBankSignEcashOrder,
     UserVerifyECashOrderSignature,
-    UserChangeSymKeyOwnerShip}=require("./eCashOrderBackend");
+    UserChangeSymKeyOwnerShip,
+    UserDecryptCashOrder}=require("./eCashOrderBackend");
 
 
 
@@ -80,6 +81,17 @@ router.post("/changeowner/:newid",(req,res)=>{
         }
         );
 
+});
+router.post("/getDecryptedEcashOrder",(req,res)=>{
+    requestJSON=req.body;
+    UserDecryptCashOrder(requestJSON,
+        (decrypted)=>{
+            res.send({result:decrypted});
+        },
+        (err)=>{
+            res.status(400).send({result:"error in decrypting doc"});
+        }
+        );
 });
 
 

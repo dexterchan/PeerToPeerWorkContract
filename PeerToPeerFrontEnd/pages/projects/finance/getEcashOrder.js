@@ -4,44 +4,24 @@ import workContractfunc from "../../../ethereum/project";
 import web3 from "../../../ethereum/web3_query";
 
 import { Link, Router } from "../../../routes";
-
-const debug = require("debug")("app:DEBUG");
 const myconfig = require("../../../config/SystemSetting");
 
+const debug = require("debug")("app:DEBUG");
 import { Message, TextArea, Button, Grid, Form } from "semantic-ui-react";
-const StatusMap = require("../../../ethereum/WorkContractStatus");
 
-class MakePayment extends Component {
-  static emptyAddress = "0x0000000000000000000000000000000000000000";
-
+class GetECashOrder extends Component {
   static async FreshSummary(workContract) {
     const summary = {};
-
-    summary["myStatus"] =
-      StatusMap[await workContract.methods.myStatus().call()];
-    summary["hirer"] = await workContract.methods.hirer().call();
-    summary["hirerName"] = await workContract.methods
-      .getMemberName(summary["hirer"])
-      .call();
-    summary["hiree"] = await workContract.methods.hiree().call();
-    if (summary["hiree"] == MakePayment.emptyAddress) {
-      summary["hireeName"] = "";
-    } else {
-      summary["hireeName"] = await workContract.methods
-        .getMemberName(summary["hiree"])
-        .call();
-    }
-
     summary[
-      "hirerEncryptedCashOrder"
-    ] = await workContract.methods.hirerEncryptedCashOrder().call();
+      "hireeEncryptedCashOrder"
+    ] = await workContract.methods.hireeEncryptedCashOrder().call();
     return summary;
   }
   static async getInitialProps(props) {
     //running in server
     const workContract = workContractfunc(props.query.address);
     const ecashorder_url = myconfig("ecashorder_url");
-    const summary = await MakePayment.FreshSummary(workContract);
+    const summary = await GetECashOrder.FreshSummary(workContract);
 
     debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
     const address = props.query.address;
@@ -52,42 +32,45 @@ class MakePayment extends Component {
     super(props);
     this.webserviceurl = this.props.ecashorder_url;
     this.state = {
-      user: "",
-      loading: false,
-      commitLoading: false,
-      statusMessage: "",
-      summary: this.props.summary,
-      hireeEncryptedCashOrder: "",
-      showCommit:false
-    };
+        user: "",
+        loading: false,
+        commitLoading: false,
+        statusMessage: "",
+        summary: this.props.summary,
+        showCommit:false,
+        decryptedDoc:""
+      };
   }
 
-  onPayment = async event => {
+  onDecrypt=async(event)=>{
     event.preventDefault();
-    this.setState({ loading: true });
+    this.setState({loading:true});
+    
     try {
-      const payee = this.state.summary.hireeName;
-      const URL = `${this.webserviceurl}/changeowner/${payee}`; //"http://localhost:8001/api/ecashorder";//config.get("ecashorder");
-
-      const eCashOrderJSON = JSON.parse(
-        this.state.summary.hirerEncryptedCashOrder.replace(/\\\"/g, '"')
-      );
-
-      const response = await fetch(URL, {
-        method: "POST",
-        //mode: 'CORS', not using cross-fetch
-        body: JSON.stringify(eCashOrderJSON),
-        headers: { "Content-Type": "application/json" }
-      });
-      const hireeEncryptedCashOrder = JSON.stringify(await response.json());
-
-      this.setState({ hireeEncryptedCashOrder });
-    } catch (ex) {
-      this.setState({statusMessage:ex.message});
-    } finally {
-      this.setState({ loading: false, showCommit: true });
-    }
-  };
+        //const payee = this.state.summary.hireeName;
+        const URL = `${this.webserviceurl}/getDecryptedEcashOrder`; 
+        
+        const eCashOrderJSON = JSON.parse(
+          this.state.summary.hireeEncryptedCashOrder.replace(/\\\"/g, '"')
+        );
+        
+        const response = await fetch(URL, {
+          method: "POST",
+          //mode: 'CORS', not using cross-fetch
+          body: JSON.stringify(eCashOrderJSON),
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        const decryptedDoc = (await response.json());
+        console.log("onDecrypt func 4",decryptedDoc.result);
+        this.setState({ decryptedDoc:decryptedDoc.result,showCommit:true });
+      } catch (ex) {
+        this.setState({statusMessage:ex.message});
+        console.log(ex);
+      } finally {
+        this.setState({ loading: false, showCommit: true });
+      }
+  }
 
   onCommit = async (event)=>{
     event.preventDefault();
@@ -96,7 +79,7 @@ class MakePayment extends Component {
       const accounts = await web3.eth.getAccounts();
       const workContract = workContractfunc(this.props.address);
       await workContract.methods
-        .hirerMakePayment( this.state.hireeEncryptedCashOrder)
+        .hireeConfirmPayment()
         .send({ from: accounts[0] });
 
       Router.replace(`/workcontract/${this.props.address}`);
@@ -110,27 +93,26 @@ class MakePayment extends Component {
   render() {
     return (
       <Layout user={this.state.user}>
-        <h3>Make Payment to hiree</h3>
+        <h3>Get EcashOrder</h3>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Button
               fluid
               loading={this.state.loading}
+              onClick={this.onDecrypt}
               primary
-              
-              onClick={this.onPayment}
             >
-              Transfer eCashorder ownership to hiree->
+              Retrieve the eCashOrder-->
             </Button>
           </Grid.Row>
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hirer encryted eCashorder</label>
+                  <label>hiree encryted eCashorder</label>
                   <TextArea
-                    placeholder="hirer eCashOrder"
-                    value={this.state.summary.hirerEncryptedCashOrder.replace(
+                    placeholder="hiree eCashOrder"
+                    value={this.state.summary.hireeEncryptedCashOrder.replace(
                       /\\\"/g,
                       '"'
                     )}
@@ -147,11 +129,8 @@ class MakePayment extends Component {
                 <Form.Field>
                   <label>hiree encryted eCashorder</label>
                   <TextArea
-                    placeholder="hiree eCashOrder"
-                    value={this.state.hireeEncryptedCashOrder.replace(
-                      /\\\"/g,
-                      '"'
-                    )}
+                    placeholder="decrypted eCashOrder"
+                    value={this.state.decryptedDoc}
                     style={{ overflowWrap: "nowrap" }}
                     rows={12}
                     onChange={(e, data) => {}}
@@ -170,7 +149,7 @@ class MakePayment extends Component {
                   color="green"
                   onClick={this.onCommit}
                 >
-                  Commit to Contract
+                  Confirm got paid
                 </Button>
                 <Message error header="oops!" content={this.state.statusMessage} />
                 </Form>
@@ -185,4 +164,4 @@ class MakePayment extends Component {
   }
 }
 
-export default MakePayment;
+export default GetECashOrder;
