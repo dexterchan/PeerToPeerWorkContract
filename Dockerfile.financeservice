@@ -11,6 +11,7 @@ RUN mkdir -p /usr/src/app/FinanceService
 RUN mkdir -p /usr/src/app/KeyVault
 COPY FinanceService /usr/src/app/FinanceService
 COPY KeyVault /usr/src/app/KeyVault
+COPY CryptoWrapper /usr/src/app/CryptoWrapper
 RUN rm -Rf /usr/src/app/FinanceService/node_modules/
 RUN rm -Rf /usr/src/app/KeyVault/node_modules/
 RUN rm -f /usr/src/app/FinanceService/package-lock.json
