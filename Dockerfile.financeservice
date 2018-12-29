@@ -1,0 +1,24 @@
+FROM node:10-alpine
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/FinanceService
+
+ENV PATH /usr/src/app/FinanceService:/usr/local/bin:$PATH
+
+
+RUN cd /usr/src/app
+RUN mkdir -p /usr/src/app/FinanceService
+RUN mkdir -p /usr/src/app/KeyVault
+COPY FinanceService /usr/src/app/FinanceService
+COPY KeyVault /usr/src/app/KeyVault
+RUN rm -Rf /usr/src/app/FinanceService/node_modules/
+RUN rm -Rf /usr/src/app/KeyVault/node_modules/
+RUN rm -f /usr/src/app/FinanceService/package-lock.json
+RUN rm -f /usr/src/app/KeyVault/package-lock.json
+RUN cd /usr/src/app/KeyVault
+RUN npm install
+RUN cd /usr/src/app/FinanceService
+RUN npm install
+
+
+CMD ["npm","start"]
