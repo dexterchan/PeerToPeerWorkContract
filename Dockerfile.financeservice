@@ -9,6 +9,7 @@ ENV PATH /usr/src/app/FinanceService:/usr/local/bin:$PATH
 RUN cd /usr/src/app
 RUN mkdir -p /usr/src/app/FinanceService
 RUN mkdir -p /usr/src/app/KeyVault
+RUN mkdir -p /usr/src/app/KeyVault/keys
 COPY FinanceService /usr/src/app/FinanceService
 COPY KeyVault /usr/src/app/KeyVault
 COPY CryptoWrapper /usr/src/app/CryptoWrapper
@@ -18,6 +19,9 @@ RUN rm -f /usr/src/app/FinanceService/package-lock.json
 RUN rm -f /usr/src/app/KeyVault/package-lock.json
 WORKDIR /usr/src/app/KeyVault
 RUN cd /usr/src/app/KeyVault
+RUN ./CreateRSA.SelfSigned.OpenSSL.sh bankA
+RUN ./CreateRSA.SelfSigned.OpenSSL.sh hirer
+RUN ./CreateRSA.SelfSigned.OpenSSL.sh hiree
 RUN npm install
 WORKDIR /usr/src/app/FinanceService
 RUN cd /usr/src/app/FinanceService
