@@ -15,7 +15,7 @@ hostname=localhost
 
 #Generate a self signed Certificate
 # -x509 tells req to create a self-signed certificate
-openssl req -newkey rsa:2048 -nodes -keyout ./keys/${NAME}.privkey.pem -x509 -days 3650 -out ./keys/${NAME}.certificate.pem 
+openssl req -newkey rsa:2048 -nodes -keyout ./keys/${NAME}.privkey.pem -x509 -days 3650 -out ./keys/${NAME}.certificate.pem -subj '/CN=www.mydom.io/O=My Company Name LTD./C=US'
 
 openssl x509 -text -noout -in ./keys/${NAME}.certificate.pem
 

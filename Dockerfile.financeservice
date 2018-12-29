@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/FinanceService
 
 ENV PATH /usr/src/app/FinanceService:/usr/local/bin:$PATH
-
+ENV DEBUG app:error
 
 RUN cd /usr/src/app
 RUN mkdir -p /usr/src/app/FinanceService

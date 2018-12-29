@@ -52,7 +52,7 @@ beforeEach(
 
         factory=await new web3.eth.Contract(compiledFactoryABI)
         .deploy({data:"0x"+compliedFactoryEVM.bytecode.object }) //tell web3 to prepare a copy of contract for deployment
-        .send({from: accounts[0] ,  gas:5024164});
+        .send({from: accounts[0] ,  gas:6024164});
 
         hirerAddress = accounts[1];
         hireeAddress = accounts[2];

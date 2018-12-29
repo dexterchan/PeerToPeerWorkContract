@@ -217,6 +217,9 @@ contract Peer2PeerProject{
     function hireeConfirmPayment() public restrictedhiree{
         require(myStatus==STATUS.PAYMENT, "hiree only confirm payment after hirer making payment");
         myStatus=STATUS.CLOSE;
+        
+        dashBoard.updateMemberCredit(hirer,int(reward));
+        dashBoard.updateMemberCredit(hiree,int(reward));
     }
     function getMemberName(address a) public view returns (string memory){
        //uint  m = dashBoard.getMemberMap(a);
