@@ -11,11 +11,13 @@ contract Peer2PeerProjectDashBoard{
     Member[] public memberList;
     address public myManager;
     mapping (address=>uint) public memberMap;
+    mapping (address=>uint) public postProcessedMap;
     
     constructor() public{
         myManager=msg.sender;
     }
     function createProject(string memory _task_des, uint _reward,int _minCredit, string memory _duration) public returns(Peer2PeerProject){
+        require( memberMap[msg.sender]>0,"Only member can create project");
         Peer2PeerProject  newProject=new Peer2PeerProject(this,msg.sender,_task_des, _reward, _minCredit,   _duration);
         deployedProjects.push(newProject);
         return newProject;
@@ -75,7 +77,23 @@ contract Peer2PeerProjectDashBoard{
         Member storage m = memberList[inx];
         
         return m.credit+=creditChange;
+        
     }
+    /*
+    dangerous code, will crash the EVM at p.getReward()
+    function testPostProcess() public restrictedmgr{
+        //Test post process to grant credit back to hier/hiree
+        Peer2PeerProject p=Peer2PeerProject(deployedProjects[0]);
+        
+        int r = int(p.getReward());
+        address h = p.getHirer();
+        uint inx = getMember(h);
+        Member storage m = memberList[inx];
+        
+        m.credit+=r;
+        
+        postProcessedMap[address(p)]=now;
+    }*/
    
 }
 
@@ -217,9 +235,6 @@ contract Peer2PeerProject{
     function hireeConfirmPayment() public restrictedhiree{
         require(myStatus==STATUS.PAYMENT, "hiree only confirm payment after hirer making payment");
         myStatus=STATUS.CLOSE;
-        
-        dashBoard.updateMemberCredit(hirer,int(reward));
-        dashBoard.updateMemberCredit(hiree,int(reward));
     }
     function getMemberName(address a) public view returns (string memory){
        //uint  m = dashBoard.getMemberMap(a);
@@ -230,6 +245,12 @@ contract Peer2PeerProject{
         return dashBoard.getMember(a);
     }
     
+    function getReward()public view returns (uint){
+        return reward;
+    }
+    function getHirer()public view returns(address){
+        return hirer;
+    }
     function getWorkContractSummary() public view returns (
         uint,
         address,string memory,
