@@ -1,0 +1,1 @@
+docker build -f Dockerfile.financeservice --tag p2pworkcontract/financeservice .
