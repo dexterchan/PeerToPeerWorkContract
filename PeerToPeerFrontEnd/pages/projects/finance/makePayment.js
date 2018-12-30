@@ -110,7 +110,7 @@ class MakePayment extends Component {
   render() {
     return (
       <Layout user={this.state.user}>
-        <h3>Make Payment to hiree</h3>
+        <h3>Make Payment to {this.state.summary.hireeName}</h3>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Button
@@ -120,14 +120,14 @@ class MakePayment extends Component {
               
               onClick={this.onPayment}
             >
-              Transfer eCashorder ownership to hiree->
+              Transfer eCashorder ownership to {this.state.summary.hireeName}->
             </Button>
           </Grid.Row>
           <Grid.Row columns={2}>
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hirer encryted eCashorder</label>
+                  <label>{this.state.summary.hirerName} encryted eCashorder</label>
                   <TextArea
                     placeholder="hirer eCashOrder"
                     value={this.state.summary.hirerEncryptedCashOrder.replace(
@@ -145,9 +145,9 @@ class MakePayment extends Component {
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hiree encryted eCashorder</label>
+                  <label>{this.state.summary.hireeName} encryted eCashorder</label>
                   <TextArea
-                    placeholder="hiree eCashOrder"
+                    placeholder="hiree ecashorder"
                     value={this.state.hireeEncryptedCashOrder.replace(
                       /\\\"/g,
                       '"'

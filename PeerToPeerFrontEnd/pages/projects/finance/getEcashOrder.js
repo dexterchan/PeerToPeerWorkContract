@@ -23,10 +23,14 @@ class GetECashOrder extends Component {
     const ecashorder_url = myconfig("ecashorder_url");
     const summary = await GetECashOrder.FreshSummary(workContract);
 
+    
+    const hiree= await workContract.methods.hiree().call();
+    const hireeName=await workContract.methods.getMemberName(hiree).call();
+
     debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
     const address = props.query.address;
 
-    return { ecashorder_url, address, summary };
+    return { ecashorder_url, address, summary ,hireeName};
   }
   constructor(props) {
     super(props);
@@ -93,7 +97,7 @@ class GetECashOrder extends Component {
   render() {
     return (
       <Layout user={this.state.user}>
-        <h3>Get EcashOrder</h3>
+        <h3>{this.props.hireeName} Get EcashOrder</h3>
         <Grid divided="vertically">
           <Grid.Row columns={2}>
             <Button
@@ -109,7 +113,7 @@ class GetECashOrder extends Component {
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hiree encryted eCashorder</label>
+                  <label>{this.props.hireeName} encryted eCashorder</label>
                   <TextArea
                     placeholder="hiree eCashOrder"
                     value={this.state.summary.hireeEncryptedCashOrder.replace(
@@ -127,7 +131,7 @@ class GetECashOrder extends Component {
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hiree encryted eCashorder</label>
+                  <label>{this.props.hireeName}  deencryted eCashorder</label>
                   <TextArea
                     placeholder="decrypted eCashOrder"
                     value={this.state.decryptedDoc}

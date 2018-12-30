@@ -38,8 +38,8 @@ class CreateCashOrder extends Component {
         }
     ];
     componentDidMount() {
-        
-        debug(`componentDidMount:${this.state.user}`);
+        console.log("Create Cashorder user:",this.state.user);
+        //debug(`componentDidMount:${this.state.user}`);
     }
     checkValue= (event)=>{
         const r = event.target.value;
@@ -72,8 +72,8 @@ class CreateCashOrder extends Component {
             amount:this.state.value,
             DepositOrLoan:true
         };
-
-        //console.log(data);
+        console.log(data);
+        
         const URL=this.webserviceurl;//"http://localhost:8001/api/ecashorder";//config.get("ecashorder");
         
         const response = await fetch(URL, {

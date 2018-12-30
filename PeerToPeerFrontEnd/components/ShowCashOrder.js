@@ -63,8 +63,8 @@ class ShowCashOrder extends Component {
       : JSON.stringify(this.state.hireeEncryptedCashOrder, null, 4)
     )
       .replace(/\\\"/g, '"')
-      .replace(/\"{/, "{")
-      .replace(/}\"/, "}");
+      .replace(/^\"/, "")
+      .replace(/\"$/, "");
   };
 
   onValidate = async event => {

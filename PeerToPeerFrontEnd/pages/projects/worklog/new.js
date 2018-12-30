@@ -20,7 +20,8 @@ class NewWorkLog extends Component {
     this.state = {
       statusMessage: "",
       loading: false,
-      logDes: ""
+      logDes: "",
+      user:""
     };
   }
 
@@ -45,12 +46,16 @@ class NewWorkLog extends Component {
 
   render() {
     return (
-      <Layout>
+      <Layout onUserChange={(user) => {
+        
+        this.setState({user});
+        
+      }}>
         <Link route={`/workcontract/${this.props.address}/worklog`}>
           <a>&lt;&lt;Back</a>
         </Link>
 
-        <h3>Hiree creates a work log</h3>
+        <h3>{this.state.user} creates a work log</h3>
         <Label>Contract address: {this.props.address}</Label>
         <Form
           onSubmit={this.onSubmit}

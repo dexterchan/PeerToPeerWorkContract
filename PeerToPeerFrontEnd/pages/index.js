@@ -17,7 +17,7 @@ class PeerToPeerFrontEnd extends Component {
         super(props);
 
         this.state = {
-            user: "hirer",
+            user: "",
             bank: null
         };
         
@@ -39,7 +39,12 @@ class PeerToPeerFrontEnd extends Component {
 
     render() {
         return (
-            <Layout>
+            <Layout onUserChange={
+                (user)=>{
+                    this.setState({user});
+                    //Console.log(`Index page chnage to ${user}`);
+                }
+            }>
                 
                 <div>
                     

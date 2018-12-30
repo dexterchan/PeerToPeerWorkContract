@@ -128,6 +128,14 @@ class WorkContractShow extends Component{
                 }
 
             );
+            items.push(
+                {
+                    header:executionDate,
+                    meta:"Execution Date of this contract",
+                    description:"The date when hiree started to accept and execute this contract",
+                    style: {overflowWrap:'break-word'}
+                }
+            );
         }
         return <Card.Group items={items} />;
     }
@@ -184,20 +192,25 @@ class WorkContractShow extends Component{
 
     render(){
         return (
-            <Layout user={this.state.user}>
+            <Layout  onUserChange={
+                (user)=>{
+                    this.setState({user});
+                    //Console.log(`show page chnage to ${user}`);
+                }
+            }>
                 <h2>Status: {this.state.summary.myStatus}</h2>
                 {
                     this.state.summary.myStatus=="ACCEPTED"?
                         <Link route={`/workcontract/${this.props.address}/finance/payment`}>
                             <a>
-                                <Button color="green" >Proceed to payment</Button>
+                                <Button color="green" >{this.state.summary.hirerName} Proceed to payment</Button>
                             </a>
                         </Link>
                     :
                     this.state.summary.myStatus=="PAYMENT"?
                         <Link route={`/workcontract/${this.props.address}/getEcashOrder`}>
                             <a>
-                                <Button color="green" >Get EcashOrder</Button>
+                                <Button color="green" >{this.state.summary.hireeName} Get EcashOrder</Button>
                             </a>
                         </Link>
                     :""

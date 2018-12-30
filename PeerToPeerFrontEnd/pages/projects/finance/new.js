@@ -33,7 +33,7 @@ class CreateNewDeposit extends Component {
     super(props);
 
     this.state = {
-      user: "hirer",
+      user: "",
       showCashOrderCreate: true,
       MyEashOrder: null,
       statusMessage: "",
@@ -68,7 +68,14 @@ class CreateNewDeposit extends Component {
 
   render() {
     return (
-      <Layout user={this.state.user} onUserChange={user => {}}>
+      <Layout onUserChange={(user) => {
+        
+        this.setState({user});
+        //drance between state to update the Create Cash Order component for new user
+        this.setState({showCashOrderCreate:false});
+        this.setState({showCashOrderCreate:true});
+      }}>
+      {this.state.user} is preparing eCashOrder.
         {this.state.showCashOrderCreate ? (
           <CreateCashOrder
             user={this.state.user}

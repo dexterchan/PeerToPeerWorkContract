@@ -57,8 +57,10 @@ class CreateNewProject extends Component{
 
     render(){
         return (
-            <Layout user={this.state.user}  onUserChange={
+            <Layout  onUserChange={
                 (user)=>{
+                    this.setState({user});
+                    //Console.log(`Index page chnage to ${user}`);
                 }
             } >
 
