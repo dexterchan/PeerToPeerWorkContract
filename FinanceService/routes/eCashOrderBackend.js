@@ -28,7 +28,7 @@ const UserEncryptAndBankSignEcashOrder=async (whoEncrypt,finEntity,eCashOrder,ca
     try{
         const bankPrivateKey=await KeyVault.privateKeyAsyncPromise(finEntity);
         const UserPubKey = await KeyVault.publicKeyAsyncPromise(whoEncrypt);
-        errorlog(UserPubKey);
+        //errorlog(UserPubKey);
         const encryptedSignResult=await pubKeyEncryptAndSignECashOrderPromise(eCashOrder,whoEncrypt,UserPubKey,bankPrivateKey);
         callback(encryptedSignResult);
     }catch(err){
