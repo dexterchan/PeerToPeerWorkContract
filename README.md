@@ -5,7 +5,10 @@
 ## Also, it serves as the gateway to connect to internal Finance Service which manage eCashOrder
 
 ### Docker build
+docker build -f Dockerfile.PeerToPeerFrontEnd --tag p2pworkcontract/peer2peerfrontend .
 
+### Docker run
+docker run -it -e PORT=8080 --rm -p 8080:8080 p2pworkcontract/peer2peerfrontend
 
 #Finance Service
 ## Manage eCashOrder creation, asymmetric encryption, verification of digital signature
