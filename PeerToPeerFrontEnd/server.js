@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const next = require('next');
-var port = process.env.PORT | 3000;
+var port = process.env.PORT | 8080;
 const nextapp = next({
     dev: process.env.NODE_ENV !== 'production'
     //ask our app to look for global env variable "NODE_ENV"
