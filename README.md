@@ -1,4 +1,12 @@
 
+
+#Peer to Peer Front end
+## host webpage to help user access DApp hosted in the Ethereum network
+## Also, it serves as the gateway to connect to internal Finance Service which manage eCashOrder
+
+### Docker build
+
+
 #Finance Service
 ## Manage eCashOrder creation, asymmetric encryption, verification of digital signature
 
