@@ -97,7 +97,7 @@ class WorkLogIndex extends Component {
         <Link route={`/workcontract/${this.props.address}/worklog/new`}>
           <a>
             <Button primary floated="right" style={{ marginBottom: 10 }} disabled={this.state.workAccepted}>
-              Hiree adds Work Log
+              {this.props.hireeName} adds Work Log
             </Button>
           </a>
         </Link>

@@ -88,7 +88,7 @@ class WorkContractShow extends Component{
         }=this.state.summary;
         const items=[
             {
-                header:hirer+":("+hirerName+")",
+                header:hirerName+":("+hirer+")",
                 meta:"hirer of this contract",
                 description:"Hirer created this contract",
                 style: {overflowWrap:'break-word'}
@@ -121,7 +121,7 @@ class WorkContractShow extends Component{
         if(hiree!=WorkContractShow.emptyAddress){
             items.push(
                 {
-                    header:hiree+":("+hireeName+")",
+                    header:hireeName+":("+hiree+")",
                     meta:"hiree of this contract",
                     description:"Hiree is workong on this contract",
                     style: {overflowWrap:'break-word'}

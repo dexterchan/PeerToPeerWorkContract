@@ -52,12 +52,17 @@ class WorkLogRow extends Component{
 
     renderActionModule(hirerAccepted,hirerRejected){
         
-            return (
-                <div>
-                <Button color="green" loading={this.state.acceptloading} onClick={this.onAccept}>Accept</Button>
-                <Button color="red" loading={this.state.acceptloading} onClick={this.onReject}>Reject</Button>
-                </div>
-            );
+            if(!hirerAccepted && !hirerRejected){
+                return (
+                    <div>
+                    <Button color="green" loading={this.state.acceptloading} onClick={this.onAccept}>Accept</Button>
+                    <Button color="red" loading={this.state.acceptloading} onClick={this.onReject}>Reject</Button>
+                    </div>
+                );
+            }else{
+                return "";
+            }
+            
         
     }
 
@@ -77,7 +82,7 @@ class WorkLogRow extends Component{
                     }}/>
                     :this.state.hirerComment
             }</Cell>
-            <Cell>{hirerAccepted?"ACCEPTED":(hirerRejected?"REJECTED":"not yet")}</Cell>
+            <Cell>{hirerAccepted?"ACCEPTED":(hirerRejected?"REJECTED":"PENDING")}</Cell>
             <Cell>
                 {
                     this.state.active ?
