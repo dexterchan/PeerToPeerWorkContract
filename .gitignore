@@ -4,5 +4,5 @@ node_modules
 *.encrypted
 .next
 buildV4
-buildV5
+
 package-lock.json

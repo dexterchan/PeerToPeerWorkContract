@@ -1,0 +1,1 @@
+docker run -it -e PORT=8080 --rm -p 8080:8080 p2pworkcontract/peer2peerfrontend
