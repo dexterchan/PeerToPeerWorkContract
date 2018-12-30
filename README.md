@@ -5,4 +5,4 @@
 ### Docker build
 docker build -f Dockerfile.financeservice --tag p2pworkcontract/financeservice .
 ### Docker run
-docker run -it -e PORT=8002 --rm -p 8001:8001 p2pworkcontract/financeservice
+docker run -it -e PORT=8002 --rm -p 8002:8002 p2pworkcontract/financeservice

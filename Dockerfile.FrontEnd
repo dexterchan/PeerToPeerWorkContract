@@ -1,0 +1,21 @@
+FROM node:10.15.0-stretch-slim
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/PeerToPeerFrontEnd
+
+ENV PATH /usr/src/app/PeerToPeerFrontEnd:/usr/local/bin:$PATH
+ENV DEBUG app:error
+
+RUN cd /usr/src/app
+RUN mkdir -p /usr/src/app/PeerToPeerFrontEnd
+
+COPY PeerToPeerFrontEnd /usr/src/app/PeerToPeerFrontEnd
+RUN rm -Rf /usr/src/app/PeerToPeerFrontEnd/node_modules/
+RUN rm -f /usr/src/app/PeerToPeerFrontEnd/package-lock.json
+
+WORKDIR /usr/src/app/PeerToPeerFrontEnd
+RUN cd /usr/src/app/PeerToPeerFrontEnd
+RUN npm install
+
+CMD ["bash"]
+#CMD ["npm","start"]
