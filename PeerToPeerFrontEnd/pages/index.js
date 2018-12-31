@@ -5,13 +5,26 @@ import { Card,Button,Dropdown,Icon} from 'semantic-ui-react';
 
 import Layout from "../components/Layout";
 import {Link} from "../routes";
+
+import web3 from '../ethereum/web3_query';
+import workContractfunc from "../ethereum/project";
+
 class PeerToPeerFrontEnd extends Component {
 
     static async getInitialProps(){
         //running in server
         const projects=await factory.methods.getDeployedProjects().call();
-
-        return {projects};
+        
+        const briefProjects=await Promise.all ( projects.map(async address=>{
+            const workContract =workContractfunc(address);
+            const hirer=await workContract.methods.hirer().call();
+            const hirerName=await workContract.methods.getMemberName(hirer).call();
+            return{
+                address,
+                hirerName
+            };
+        }));
+        return {projects,briefProjects};
     }
     constructor(props) {
         super(props);
@@ -24,11 +37,13 @@ class PeerToPeerFrontEnd extends Component {
     }
 
     renderProjects(){
-        const items=this.props.projects.map(address=>{
+        
+        const items=this.props.briefProjects.map(prj=>{
             return{
-                header:address,
+                header:prj.address,
+                meta:"Raised by "+prj.hirerName,
                 description:
-                <Link route={`workcontract/${address}`}>
+                <Link route={`workcontract/${prj.address}`}>
                     <a>View Work Contract</a>
                 </Link>
                 ,fluid: true
