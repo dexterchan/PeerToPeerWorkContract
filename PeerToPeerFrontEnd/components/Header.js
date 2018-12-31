@@ -20,6 +20,7 @@ const userOptions = [
 
 class Header extends Component{
     
+    refreshMilliSecond=1000;
 
     freshAcct = async()=>{
         let username;
@@ -60,7 +61,7 @@ class Header extends Component{
     }
     componentDidMount() {
         //console.log(this.props.onUserChange);
-        this.myTimer = setInterval(()=> {this.freshAcct()} , 2000);
+        this.myTimer = setInterval(()=> {this.freshAcct()} , this.refreshMilliSecond);
     }
 
     componentWillUnmount()  {
