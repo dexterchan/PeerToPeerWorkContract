@@ -24,5 +24,5 @@ WORKDIR /usr/src/app/PeerToPeerFrontEnd
 RUN cd /usr/src/app/PeerToPeerFrontEnd
 RUN npm install
 
-CMD ["bash"]
-#CMD ["npm","start"]
+#CMD ["bash"]
+CMD ["npm","start"]
