@@ -93,7 +93,7 @@ class ShowCashOrder extends Component {
 
   onDeposit = async event => {
     event.preventDefault();
-    Router.pushRoute(
+    Router.replace(
       `/workcontract/${this.props.address}/finance/new`
     );
   };

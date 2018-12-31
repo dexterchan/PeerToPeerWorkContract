@@ -17,11 +17,12 @@ module.exports=(key)=>{
         let mode;
         
         mode = process.env.RUN_ENV;
-        if(mode.length==0){
+        debug(`System config plan to run in mode: ${mode} ${SYS[key][mode]}`)
+        if(mode==undefined || mode.length==0){
             mode="default";
         }
-        
         debug(`System config Running in mode: ${mode} ${SYS[key][mode]}`)
+        
        
         return SYS[key][mode];
     }
