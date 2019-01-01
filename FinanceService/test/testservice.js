@@ -4,13 +4,13 @@ const fetch = require('node-fetch');
 const headers = {};
 const debug=require("debug")("app:debug");
 const debugdev=require("debug")("app:dev");
-const eCashOrderBackEndCreate=require("../routes/eCashOrderBackend").create;
+const eCashOrderBackEndCreate=require("../models/eCashOrderBackend").create;
 
 const {
     UserEncryptAndBankSignEcashOrder,
     UserVerifyECashOrderSignature,
     UserDecryptCashOrder,
-    UserChangeSymKeyOwnerShip}=require("../routes/eCashOrderBackend");
+    UserChangeSymKeyOwnerShip}=require("../models/eCashOrderBackend");
 
 
 const URL = "http://localhost:8001/api/ecashorder";

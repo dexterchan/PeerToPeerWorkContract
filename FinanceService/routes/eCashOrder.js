@@ -4,13 +4,13 @@ const Joi = require("joi");
 const zlib = require('zlib');
 const debug=require("debug")("app:debug");
 const KeyVault = require("../../KeyVault/KeyVaultService");
-const eCashOrderBackEndCreate=require("./eCashOrderBackend").create;
+const eCashOrderBackEndCreate=require("../models/eCashOrderBackend").create;
 
 const {
     UserEncryptAndBankSignEcashOrder,
     UserVerifyECashOrderSignature,
     UserChangeSymKeyOwnerShip,
-    UserDecryptCashOrder}=require("./eCashOrderBackend");
+    UserDecryptCashOrder}=require("../models/eCashOrderBackend");
 
 
 
