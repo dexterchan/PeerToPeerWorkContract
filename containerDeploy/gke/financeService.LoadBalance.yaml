@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: peer2peercontract
+  labels:
+    app: financeservice
+
+spec:
+  type: LoadBalancer
+  ports:
+  
+  - port: 8888
+    targetPort: financehttp
+ 
+  selector:
+    app: financeservice

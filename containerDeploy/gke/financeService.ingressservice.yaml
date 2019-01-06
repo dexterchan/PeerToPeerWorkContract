@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+
+
+kind: Ingress
+metadata:
+  name: peer2peer-ingress
+spec:
+  backend:
+    serviceName: financeservice
+    servicePort: 8888
