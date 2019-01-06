@@ -1,0 +1,15 @@
+ <Result>   
+    <Greek Role="YieldCurve/INR/XYZ/1D" ccy="INR">
+		<SwapCurve ccy="INR">
+			<MoneyMarketQuotes assetName="INR/OIS">
+				<Quote tenor="1Y" midRate="1" spread="0"/>
+                <Quote tenor="2Y" midRate="2" spread="0"/>
+			</MoneyMarketQuotes>
+			<SwapRates assetName="INR/OIS">
+                <Quote term="5Y" midRate="10" spread="0"/>
+				<Quote term="10Y" midRate="10" spread="0"/>
+                <Quote term="20Y" midRate="20" spread="0"/>
+			</SwapRates>
+		</SwapCurve>
+	</Greek>
+</Result>
