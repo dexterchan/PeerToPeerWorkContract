@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: financeservice
+  name: peer2peerfrontend
   labels:
-    app: financeservice
+    app: peer2peerfrontend
 
 # The traderepository frontend replica set ensures that at least 3
 # instances of the traderepository app are running on the cluster.
@@ -15,13 +15,13 @@ spec:
   template:
     metadata:
       labels:
-        app: financeservice
+        app: peer2peerfrontend
 
     spec:
       containers:
       - name: peer2peerworkcontract
         # Replace [GCLOUD_PROJECT] with your project ID.
-        image: gcr.io/mlpractise/peer2peerworkcontract-financeservice:v1
+        image: gcr.io/mlpractise/peer2peerworkcontract-peer2peerfrontend:v1
 
         # This setting makes nodes pull the docker image every time before
         # starting the pod. This is useful when debugging, but should be turned
@@ -34,10 +34,12 @@ spec:
             memory: "1000Mi"
         # The traderepository process listens on port 8080 for web traffic by default.
         ports:
-        - name: financehttp
-          containerPort: 8888
+        - name: frontendhttp
+          containerPort: 8080
        
         
         env:
         - name: PORT
-          value: "8888"
+          value: "8080"
+        - name: RUN_ENV
+          value: "UAT"

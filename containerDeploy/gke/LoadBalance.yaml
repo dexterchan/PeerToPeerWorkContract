@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: peer2peercontract
   labels:
-    app: financeservice
+    app: peer2peercontractapp
 
 spec:
   type: LoadBalancer
@@ -15,3 +15,9 @@ spec:
  
   selector:
     app: financeservice
+  
+  - port: 8080
+    targetPort: frontendhttp
+  
+  selector:
+    app:  peer2peerfrontend
