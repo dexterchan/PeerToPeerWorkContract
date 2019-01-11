@@ -2,18 +2,17 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: fanout-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "web-static-ip"
+
 spec:
   rules:
   - http:
       paths:
-      - path: /api/ecashorder/*
+      - path: /api/*
         backend:
           serviceName: financeservice-service
           servicePort: 8888
-      - path: /w/*
-        backend:
-          serviceName: web-service
-          servicePort: 8887
       - path: /*
         backend:
           serviceName: peer2peerfrontend-service
