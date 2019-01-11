@@ -21,7 +21,9 @@ if (process.env.NODE_ENV !== "production"){
 }
 app.use("/api/ecashorder",eCashOrder_router);
 
-
+app.get("/",(req,res)=>{
+    res.send("ok");
+});
 
 app.get("/healthz",(req,res)=>{
     res.send("ok");
