@@ -52,7 +52,15 @@ spec:
       - name: peer2peerworkcontractcluster
         # Replace [GCLOUD_PROJECT] with your project ID.
         image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-financeservice:v3
-
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8888
+            httpHeaders:
+            - name: X-Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
         # This setting makes nodes pull the docker image every time before
         # starting the pod. This is useful when debugging, but should be turned
         # off in production.

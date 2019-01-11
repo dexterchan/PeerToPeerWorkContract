@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fanout2-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/*
+        backend:
+          serviceName: financeservice-service
+          servicePort: 8888
+      - path: /w/*
+        backend:
+          serviceName: web-service
+          servicePort: 8887
