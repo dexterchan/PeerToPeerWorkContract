@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: peer2peerworkcontractcluster
+        # Replace [GCLOUD_PROJECT] with your project ID.
+        image: gcr.io/google-samples/hello-app:1.0
+
+        # This setting makes nodes pull the docker image every time before
+        # starting the pod. This is useful when debugging, but should be turned
+        # off in production.
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "300Mi"
+          limits:
+            memory: "700Mi"
+        # The traderepository process listens on port 8080 for web traffic by default.
+        ports:
+        - name: webhttp
+          containerPort: 8887
+        env:
+        - name: PORT
+          value: "8887"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: financeservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: financeservice
+  template:
+    metadata:
+      labels:
+        app: financeservice
+    spec:
+      containers:
+      - name: peer2peerworkcontractcluster
+        # Replace [GCLOUD_PROJECT] with your project ID.
+        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-financeservice:v2
+
+        # This setting makes nodes pull the docker image every time before
+        # starting the pod. This is useful when debugging, but should be turned
+        # off in production.
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "300Mi"
+          limits:
+            memory: "1000Mi"
+        # The traderepository process listens on port 8080 for web traffic by default.
+        ports:
+        - name: financehttp
+          containerPort: 8888
+        env:
+        - name: PORT
+          value: "8888"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer2peerfrontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: peer2peerfrontend
+  template:
+    metadata:
+      labels:
+        app: peer2peerfrontend
+    spec:
+      containers:
+      - name: peer2peerworkcontractcluster
+        # Replace [GCLOUD_PROJECT] with your project ID.
+        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-peer2peerfrontend:v1
+
+        # This setting makes nodes pull the docker image every time before
+        # starting the pod. This is useful when debugging, but should be turned
+        # off in production.
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "300Mi"
+          limits:
+            memory: "1000Mi"
+        # The traderepository process listens on port 8080 for web traffic by default.
+        ports:
+        - name: p2phttp
+          containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"

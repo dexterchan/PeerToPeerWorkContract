@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: basic-ingress
+spec:
+  backend:
+    serviceName: peer2peerfrontend-service
+    servicePort: 8080
+  rules:
+  - http:
+      paths:
+      - path: /api/ecashorder/*
+        backend:
+          serviceName: financeservice-service
+          servicePort: 8888
+      - path: /w/*
+        backend:
+          serviceName: web-service
+          servicePort: 8887

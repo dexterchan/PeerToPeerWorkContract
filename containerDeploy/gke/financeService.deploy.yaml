@@ -1,17 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: app/v1
 kind: Deployment
 metadata:
-  name: financeservice
-  labels:
-    app: financeservice
-
-# The traderepository frontend replica set ensures that at least 3
-# instances of the traderepository app are running on the cluster.
-# For more info about Pods see:
-#   https://cloud.google.com/container-engine/docs/pods/
+  name: financeservice-deployment
 spec:
   replicas: 1
-
+  selector:
+    matchLabels:
+      app: financeservice
   template:
     metadata:
       labels:
@@ -36,8 +31,6 @@ spec:
         ports:
         - name: financehttp
           containerPort: 8888
-       
-        
         env:
         - name: PORT
           value: "8888"
