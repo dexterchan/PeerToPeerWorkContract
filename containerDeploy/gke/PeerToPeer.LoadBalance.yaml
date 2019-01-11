@@ -11,7 +11,7 @@ spec:
   ports:
   
   - port: 8080
-    targetPort: frontendhttp
+    targetPort: p2phttp
  
   selector:
     app: peer2peerfrontend

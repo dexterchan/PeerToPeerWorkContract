@@ -20,9 +20,10 @@ if (process.env.NODE_ENV !== "production"){
     */
 }
 app.use("/api/ecashorder",eCashOrder_router);
+/*
 app.get("/",(req,res)=>{
     res.send("Hello world!!!");
-});
+});*/
 if (process.env.NODE_ENV === "production"){
     app.use(Helmet());
     systemLogger("Production loading Helmet...");

@@ -31,7 +31,7 @@ nextapp.prepare().then(() => {
     const app = express()
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use('/api/ethwebservice', require('./routes/ethWebService')) ;
+    app.use('/apix/ethwebservice', require('./routes/ethWebService')) ;
     app.get('*', (req,res) => {
         return handler(req,res) // for all the react stuff
     })

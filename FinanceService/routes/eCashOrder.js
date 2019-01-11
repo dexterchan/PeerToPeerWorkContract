@@ -95,7 +95,7 @@ router.post("/getDecryptedEcashOrder",(req,res)=>{
 });
 
 router.get("/",(req,res)=>{
-    res.send({msg:"Hello, Finance service!"});
+    res.send({msg:"Hello, Finance service v2!"});
     }
 );
 
