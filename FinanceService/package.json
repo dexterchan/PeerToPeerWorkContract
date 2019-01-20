@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "config": "^3.0.0",
     "cors": "^2.8.5",
     "debug": "^4.1.0",
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
+    "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "node-fetch": "^2.3.0",
     "swagger-jsdoc": "^3.2.6",

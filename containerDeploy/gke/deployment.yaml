@@ -16,7 +16,7 @@ spec:
       containers:
       - name: peer2peerworkcontractcluster
         # Replace [GCLOUD_PROJECT] with your project ID.
-        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-financeservice:v3
+        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-financeservice:v4
         #livenessProbe:
         #  httpGet:
         #    path: /healthz
@@ -41,6 +41,8 @@ spec:
         env:
         - name: PORT
           value: "8888"
+        - name: financeService_jwtPrivateKey
+          value: "financeService_jwtPrivateKey"
 ---
 apiVersion: apps/v1
 kind: Deployment

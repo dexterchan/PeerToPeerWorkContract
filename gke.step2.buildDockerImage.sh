@@ -6,7 +6,7 @@ export SERVICE=financeservice
 
  
 
-DOCKER_IMAGE_NAME=gcr.io/$PROJECT_ID/$CLUSTERNAME-$SERVICE:v3
+DOCKER_IMAGE_NAME=gcr.io/$PROJECT_ID/$CLUSTERNAME-$SERVICE:v4
 
 #docker build -f Dockerfile.financeservice --tag $DOCKER_IMAGE_NAME .
 #gcloud docker -- push $DOCKER_IMAGE_NAME
