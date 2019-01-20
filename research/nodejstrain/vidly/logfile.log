@@ -71,3 +71,164 @@ undefined
          at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
          at startup (internal/bootstrap/node.js:238:19)
          at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ level: 'error',
+  message: 'failure promise',
+  timestamp: '2019-01-20T04:11:37.666Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ Error: failure promise
+         at Promise (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:29:10)
+         at new Promise (<anonymous>)
+         at Object.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:28:9)
+         at Module._compile (internal/modules/cjs/loader.js:702:30)
+         at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+         at Module.load (internal/modules/cjs/loader.js:612:32)
+         at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+         at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ level: 'error',
+  message: 'failure promise',
+  timestamp: '2019-01-20T04:12:36.626Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ Error: failure promise
+         at Promise (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:30:10)
+         at new Promise (<anonymous>)
+         at Object.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:29:9)
+         at Module._compile (internal/modules/cjs/loader.js:702:30)
+         at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+         at Module.load (internal/modules/cjs/loader.js:612:32)
+         at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+         at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ level: 'error',
+  message: 'process is not a function',
+  timestamp: '2019-01-20T04:12:36.636Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ TypeError: process is not a function
+         at process.on (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:26:3)
+         at process.emit (events.js:182:13)
+         at emitPromiseRejectionWarnings (internal/process/promises.js:104:20)
+         at process._tickCallback (internal/process/next_tick.js:69:34)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:746:11)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ level: 'error',
+  message: 'failure promise',
+  timestamp: '2019-01-20T04:14:16.603Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ Error: failure promise
+         at Promise (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:30:10)
+         at new Promise (<anonymous>)
+         at Object.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:29:9)
+         at Module._compile (internal/modules/cjs/loader.js:702:30)
+         at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+         at Module.load (internal/modules/cjs/loader.js:612:32)
+         at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+         at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ level: 'error',
+  message: 'process is not a function',
+  timestamp: '2019-01-20T04:14:16.609Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ TypeError: process is not a function
+         at process.on (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:26:3)
+         at process.emit (events.js:182:13)
+         at emitPromiseRejectionWarnings (internal/process/promises.js:104:20)
+         at process._tickCallback (internal/process/next_tick.js:69:34)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:746:11)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:33:32.086Z',
+  [Symbol(level)]: 'info' }
+{ name: 'MongoNetworkError',
+  errorLabels: [ 'TransientTransactionError' ],
+  level: 'error',
+  message:
+   'failed to connect to server [localhost:27017] on first connect [MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017]',
+  timestamp: '2019-01-20T10:34:15.735Z',
+  [Symbol(mongoErrorContextSymbol)]: {},
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ { MongoNetworkError: failed to connect to server [localhost:27017] on first connect [MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017]
+         at Pool.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/node_modules/mongodb-core/lib/topologies/server.js:564:11)
+         at Pool.emit (events.js:182:13)
+         at Connection.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/node_modules/mongodb-core/lib/connection/pool.js:317:12)
+         at Object.onceWrapper (events.js:273:13)
+         at Connection.emit (events.js:182:13)
+         at Socket.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/node_modules/mongodb-core/lib/connection/connection.js:246:50)
+         at Object.onceWrapper (events.js:273:13)
+         at Socket.emit (events.js:182:13)
+         at emitErrorNT (internal/streams/destroy.js:82:8)
+         at emitErrorAndCloseNT (internal/streams/destroy.js:50:3)
+         at process._tickCallback (internal/process/next_tick.js:63:19)
+       name: 'MongoNetworkError',
+       errorLabels: [ 'TransientTransactionError' ],
+       [Symbol(mongoErrorContextSymbol)]: {} } ] }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:42:01.683Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:43:11.165Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:43:43.153Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:44:27.206Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:44:47.144Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:46:51.410Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:46:54.133Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T10:48:37.804Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:01:36.623Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:02:40.889Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:03:29.068Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:04:09.425Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:04:15.353Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:06:07.676Z',
+  [Symbol(level)]: 'info' }
