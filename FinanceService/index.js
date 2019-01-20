@@ -4,12 +4,24 @@ const Helmet=require('helmet');
 const Morgan = require('morgan');
 const config = require("config");
 const systemLogger = require("debug")("app:sys");
+const {error,logger} = require("./middleware/error");
+
+process.on("uncaughtException", (ex)=>{
+    logger.error(ex.message,ex);
+  });
+  
 const app=express();
 
 const eCashOrder_router=require("./routes/eCashOrder");
 
+if (!config.get('jwtPrivateKey')) {
+    console.log('FATAL ERROR: jwtPrivateKey not defined in env variable financeService_jwtPrivateKey');
+    process.exit(1);
+}
+
 app.use(cors());
 app.use(express.json());
+app.use(error);
 
 if (process.env.NODE_ENV !== "production"){
     /*

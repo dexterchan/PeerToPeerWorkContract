@@ -1,0 +1,4 @@
+{
+  "jwtPrivateKey": "financeService_jwtPrivateKey",
+  "mongohostname":"financeService_mongohostname"
+}

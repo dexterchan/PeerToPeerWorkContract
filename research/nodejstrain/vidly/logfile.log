@@ -1,0 +1,39 @@
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+error: on purpose
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+error: on purpose {"timestamp":"2019-01-19T12:04:57.913Z"}
+error: on purpose {"timestamp":"2019-01-19T12:06:41.705Z"}
+error: on purpose {"timestamp":"2019-01-19T12:10:20.236Z"}
+{"level":"error","timestamp":"2019-01-19T12:12:25.494Z"}
+error: on purpose {"timestamp":"2019-01-19T12:13:36.362Z"}
+error: on purpose {"timestamp":"2019-01-19T12:16:10.511Z"}
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+{"level":"error","message":"on purpose"}
+undefined
+undefined
+{"level":"error","message":"on purpose"}
+{ level: 'error',
+  message: 'on purpose',
+  timestamp: '2019-01-19T12:29:00.459Z',
+  [Symbol(level)]: 'error' }
+{ level: 'error',
+  message: 'throw error outside',
+  timestamp: '2019-01-19T12:36:50.545Z',
+  [Symbol(level)]: 'error',
+  [Symbol(splat)]:
+   [ Error: throw error outside
+         at Object.<anonymous> (/Users/dexter/sandbox/PeerToPeerWorkContract/research/nodejstrain/vidly/index.js:29:7)
+         at Module._compile (internal/modules/cjs/loader.js:702:30)
+         at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+         at Module.load (internal/modules/cjs/loader.js:612:32)
+         at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+         at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+         at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+         at startup (internal/bootstrap/node.js:238:19)
+         at bootstrapNodeJSCore (internal/bootstrap/node.js:572:3) ] }
