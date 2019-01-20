@@ -19,6 +19,18 @@ const {error,logger} = require("./middleware/error");
 process.on("uncaughtException", (ex)=>{
   logger.error(ex.message,ex);
 });
+
+process.on("unhandledRejection", (ex)=>{
+  console.log("we got unhandled promise rejection");
+  logger.error(ex.message,ex);
+});
+
+const p=new Promise((resolve,reject)=>{
+  reject(new Error("failure promise"));
+});
+
+p.then(()=>console.log("done"));
+
 //Logging Transport
 //winston.add(winston.transports.File,{filename:"logfile.log"});
 
