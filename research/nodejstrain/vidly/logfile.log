@@ -232,3 +232,39 @@ undefined
   level: 'info',
   timestamp: '2019-01-20T11:06:07.676Z',
   [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:56:49.783Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:57:14.143Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T11:57:23.781Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:11:03.959Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:11:09.069Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:12:08.111Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:13:18.008Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:13:22.166Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB....',
+  level: 'info',
+  timestamp: '2019-01-20T12:14:21.821Z',
+  [Symbol(level)]: 'info' }
