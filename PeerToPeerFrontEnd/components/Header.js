@@ -3,6 +3,8 @@ import { Menu,Icon,Dropdown, Label } from 'semantic-ui-react';
 import {Link} from "../routes";
 import web3 from "../ethereum/web3_query";
 import factoryFunc from "../ethereum/factory";
+
+import Cookies from 'universal-cookie';
 //Link object is a React component to render anchor tags in React component
 //Link and Menu.Item css conflict with each other!!!
 //Link and Menu.Item are mutually exclusive
@@ -62,6 +64,14 @@ class Header extends Component{
     componentDidMount() {
         //console.log(this.props.onUserChange);
         this.myTimer = setInterval(()=> {this.freshAcct()} , this.refreshMilliSecond);
+        //check if login token exists
+        const cookies = new Cookies();
+        if(cookies.get("login")==undefined){
+            cookies.set('login', 'Pacman', { path: '/' });
+            console.log("set", cookies.get("login"));
+        }else{
+            console.log("received",cookies.get('login')); // Pacman
+        }
     }
 
     componentWillUnmount()  {

@@ -1,20 +1,7 @@
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, label, prettyPrint } = format;
 
-
-const logger = createLogger({
-    level: 'error',
-    format: combine(
-        timestamp(),
-        prettyPrint()
-    ),
-    transports: [
-      new transports.Console()
-    ]
-  });
-
-  
-module.exports.logger=logger;
+const {logger} = require("../startup/logging");
 
 
 module.exports.error=(err,req,res,next)=>{
