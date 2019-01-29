@@ -59,7 +59,7 @@ spec:
       containers:
       - name: peer2peerworkcontractcluster
         # Replace [GCLOUD_PROJECT] with your project ID.
-        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-peer2peerfrontend:v3.2
+        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-peer2peerfrontend:v3.3
         resources:
           requests:
             memory: "300Mi"
