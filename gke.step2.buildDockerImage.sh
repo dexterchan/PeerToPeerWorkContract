@@ -15,7 +15,7 @@ gcloud docker -- push $DOCKER_IMAGE_NAME
 
 
 export SERVICE=peer2peerfrontend
-DOCKER_IMAGE_NAME=gcr.io/$PROJECT_ID/$CLUSTERNAME-$SERVICE:v3.2
+DOCKER_IMAGE_NAME=gcr.io/$PROJECT_ID/$CLUSTERNAME-$SERVICE:v3.3
 
 docker build -f Dockerfile.PeerToPeerFrontEnd --tag $DOCKER_IMAGE_NAME .
 gcloud docker -- push $DOCKER_IMAGE_NAME
