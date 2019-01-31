@@ -8,7 +8,7 @@ import Cookies from 'universal-cookie';
 //Link object is a React component to render anchor tags in React component
 //Link and Menu.Item css conflict with each other!!!
 //Link and Menu.Item are mutually exclusive
-
+/*
 const userOptions = [
     {
         text: 'hirer',
@@ -18,7 +18,7 @@ const userOptions = [
         text: 'hiree',
         value: 'hiree'
     }
-];
+];*/
 
 class Header extends Component{
     
@@ -28,12 +28,13 @@ class Header extends Component{
         let username;
         let user;
         let address;
+        let contractAddress;
         try{
             const accounts = await web3.eth.getAccounts();
             address=accounts[0];
             user=await factoryFunc.methods.getMemberName(address).call();
             username = `${user} ${address}`;
-            
+            contractAddress = factoryFunc.options.address;
             if(user!=this.user && this.props.onUserChange != undefined){
                 //console.log("update user ",user);
                 this.props.onUserChange(user);
@@ -47,7 +48,7 @@ class Header extends Component{
             console.log(ex.message);
         }
         
-        this.setState({user,address,username});
+        this.setState({user,address,username,contractAddress});
     }
 
     constructor(props){
@@ -83,7 +84,9 @@ class Header extends Component{
             <Menu style={{ marginTop: "10px" }}>
 
             <Link  route="/">
-                <a className="item">Work Contract</a>     
+                <a className="item">Work Contract:
+                <br/><Label>{this.state.contractAddress}</Label>
+                </a>     
             </Link>
                 <Menu.Item name='user'>
                     <label>User: {this.state.username}</label>
