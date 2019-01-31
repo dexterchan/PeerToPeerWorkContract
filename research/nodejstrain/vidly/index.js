@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-require("./startup/logging");
+require("./startup/logging")();
 require("./startup/config")();
 require("./startup/route")(app);
 require("./startup/validation")();
@@ -9,8 +9,10 @@ require("./startup/db")();
 require("./startup/prod")(app);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+const server=app.listen(port, () => console.log(`Listening on port ${port}...`));
 
+
+module.exports=server;
 /*
 const p=new Promise((resolve,reject)=>{
   reject(new Error("failure promise"));

@@ -10,16 +10,19 @@ const logger = createLogger({
     new transports.File({ filename: "logfile.log" })
   ]
 });
-process.on("uncaughtException", ex => {
-    console.log("uncaughtException:");
-  logger.error(ex.message, ex);
-  process.exit(1);
-});
 
-process.on("unhandledRejection", ex => {
-  console.log("we got unhandled promise rejection");
-  logger.error(ex.message, ex);
-  process.exit(1);
-});
+module.exports = () => {
+  process.on("uncaughtException", ex => {
+    console.log("uncaughtException:");
+    logger.error(ex.message, ex);
+    process.exit(1);
+  });
+
+  process.on("unhandledRejection", ex => {
+    console.log("we got unhandled promise rejection");
+    logger.error(ex.message, ex);
+    process.exit(1);
+  });
+};
 
 module.exports.logger = logger;
