@@ -48,8 +48,8 @@ contract Peer2PeerProjectDashBoard{
     
     function getMember (address m ) public view returns (uint){
         uint inx = memberMap[m];
-        //require(inx>0,"Not found the member");
-        return inx;
+        require(inx>0,"Not found the member");
+        return inx-1;
     }
     
     function getMemberName(address m) public view returns (string memory){
@@ -57,7 +57,7 @@ contract Peer2PeerProjectDashBoard{
         if(inx==0){
             return " ";
         }
-        Member memory m = memberList[inx-1];
+        Member memory m = memberList[inx];
         
         return m.name;
     }
@@ -67,7 +67,7 @@ contract Peer2PeerProjectDashBoard{
         if(inx==0){
             return 0;
         }
-        Member memory m = memberList[inx-1];
+        Member memory m = memberList[inx];
         
         return m.credit;
     }

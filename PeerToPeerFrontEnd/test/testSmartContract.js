@@ -50,12 +50,20 @@ beforeEach(
         //Get a list of all accounts
         accounts = await web3.eth.getAccounts();
 
+        const mgr = accounts[0];
         factory=await new web3.eth.Contract(compiledFactoryABI)
         .deploy({data:"0x"+compliedFactoryEVM.bytecode.object }) //tell web3 to prepare a copy of contract for deployment
         .send({from: accounts[0] ,  gas:6024164});
 
         hirerAddress = accounts[1];
         hireeAddress = accounts[2];
+
+        await factory.methods.addMember(accounts[1],"userA",100).send(
+            { from: mgr, gas:526747 }
+        );
+        await factory.methods.addMember(accounts[2],"userB",100).send(
+            { from: mgr, gas:526747 }
+        );
 
         let _task_des="Test project";
         let _reward=1;
