@@ -27,7 +27,7 @@ class HackGetECashOrder extends Component {
     ] = await workContract.methods.hireeEncryptedCashOrder().call();
     summary[
       "hirerEncryptedCashOrder"
-    ] = await workContract.methods.hireeEncryptedCashOrder().call();
+    ] = await workContract.methods.hirerEncryptedCashOrder().call();
     return summary;
   }
   static async getInitialProps(props) {
@@ -35,7 +35,7 @@ class HackGetECashOrder extends Component {
     const workContract = workContractfunc(props.query.address);
     const ecashorder_url = myconfig("ecashorder_url");
     const summary = await HackGetECashOrder.FreshSummary(workContract);
-
+    //console.log(summary);
     debug(`Running initial prop: URL of webservice:${ecashorder_url}`);
     const address = props.query.address;
 
@@ -84,7 +84,7 @@ class HackGetECashOrder extends Component {
         const URL = `${this.webserviceurl}/getDecryptedEcashOrder`; 
         
         const eCashOrderJSON = JSON.parse(
-          this.state.summary.hireeEncryptedCashOrder.replace(/\\\"/g, '"')
+          this.state.encryptedDoc.replace(/\\\"/g, '"')
         );
         
         const response = await fetch(URL, {
@@ -158,7 +158,7 @@ class HackGetECashOrder extends Component {
             <Grid.Column>
               <Form>
                 <Form.Field>
-                  <label>hiree encryted eCashorder</label>
+                  <label>decrypted eCashorder</label>
                   <TextArea
                     placeholder="decrypted eCashOrder"
                     value={this.state.decryptedDoc}
