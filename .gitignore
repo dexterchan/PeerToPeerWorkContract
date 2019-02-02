@@ -6,3 +6,5 @@ node_modules
 buildV4
 
 package-lock.json
+
+coverage/

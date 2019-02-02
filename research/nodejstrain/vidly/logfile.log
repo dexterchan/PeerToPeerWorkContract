@@ -392,3 +392,499 @@ undefined
   level: 'info',
   timestamp: '2019-01-31T05:35:03.431Z',
   [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:34:57.870Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:40:47.765Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:41:48.172Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:42:43.680Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:43:34.117Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:53:58.507Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:54:50.190Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:55:05.705Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:57:21.164Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:58:08.059Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T05:58:48.850Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:00:14.438Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:00:21.322Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:00:58.781Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:14:49.546Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:15:16.885Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T06:19:49.206Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T07:31:03.882Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T07:58:29.552Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:00:10.348Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:00:50.259Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:07:00.717Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:07:24.704Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:07:33.326Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:50:50.456Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:51:02.068Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:54:21.931Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:54:47.013Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:56:12.875Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:57:17.975Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:58:41.731Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T08:59:41.619Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:11:50.894Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:12:35.967Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:13:29.090Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:13:42.902Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:15:39.527Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:33:27.744Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:33:55.857Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:55:17.236Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:55:38.649Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T09:58:36.364Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:08:54.671Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:11:06.529Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:11:21.377Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:11:42.200Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:11:52.095Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:12:22.695Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:12:47.025Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:13:52.972Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:17:21.889Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:18:18.653Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:19:09.954Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:21:38.698Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:22:52.683Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:25:43.670Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:26:47.119Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:27:57.089Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:28:24.415Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:31:53.541Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:32:22.020Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:32:22.016Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:33:57.504Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:35:12.101Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:35:12.146Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:36:06.945Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:36:06.945Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:36:45.552Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:37:07.546Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:37:07.592Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:37:38.782Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:40:26.808Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:41:44.329Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:42:24.978Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:42:59.844Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:43:44.157Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:44:04.202Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:44:38.682Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:44:55.645Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:46:01.289Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:46:19.986Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:48:08.397Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:48:26.070Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:48:49.744Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:49:11.202Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:53:17.441Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:53:39.916Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:53:50.609Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:54:22.255Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:55:07.863Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:55:34.102Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:55:50.644Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:56:18.927Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:56:44.288Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:57:27.672Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:58:48.913Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:59:23.810Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T10:59:23.935Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:00:04.893Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:00:05.024Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:02:02.402Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:02:02.528Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:03:28.747Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:03:28.841Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:04:06.307Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:06:32.120Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:07:26.992Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:08:08.579Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:08:41.439Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:09:05.189Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:09:20.410Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:09:49.364Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:11:51.533Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:13:57.998Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:14:16.565Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:15:20.170Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:16:36.775Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:18:30.838Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:18:49.726Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:19:06.360Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:19:51.417Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:20:05.606Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:28:19.951Z',
+  [Symbol(level)]: 'info' }
+{ message: 'Connected to MongoDB mongodb://localhost/vidly_tests....',
+  level: 'info',
+  timestamp: '2019-02-02T11:28:54.051Z',
+  [Symbol(level)]: 'info' }
