@@ -26,7 +26,7 @@ spec:
         #  timeoutSeconds: 30
         resources:
           requests:
-            memory: "300Mi"
+            memory: "100Mi"
           limits:
             memory: "700Mi"
         # This setting makes nodes pull the docker image every time before
@@ -62,7 +62,7 @@ spec:
         image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-peer2peerfrontend:v3.3
         resources:
           requests:
-            memory: "300Mi"
+            memory: "100Mi"
           limits:
             memory: "700Mi"
         # This setting makes nodes pull the docker image every time before
