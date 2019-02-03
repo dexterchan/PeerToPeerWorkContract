@@ -22,7 +22,7 @@ describe ("auth middleware",()=>{
         }
         const next=jest.fn();
         auth(req,res,next);
-        console.log(user);
+        //console.log(user);
         expect (req.user.name).toEqual("abcd");
         expect (req.user).toMatchObject(_.pick(user, ['name']));
         

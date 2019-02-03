@@ -10,7 +10,7 @@ describe("auth middleware",()=>{
         
     });
     afterEach( async()=>{
-        server.close();
+        await server.close();
        
     });
     const exec= async()=>{
@@ -41,4 +41,5 @@ describe("auth middleware",()=>{
         expect(res.status).toBe(200);
         
     });
+    
 });
