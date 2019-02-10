@@ -1,4 +1,4 @@
-FROM node:10.15.0-stretch-slim
+FROM node:10.15.0-stretch-slim as build-env
 
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app/FinanceService
@@ -24,6 +24,16 @@ RUN npm install
 WORKDIR /usr/src/app/FinanceService
 RUN cd /usr/src/app/FinanceService
 RUN npm install
+
+
+FROM node:10.15.0-stretch-slim 
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/FinanceService
+ENV PATH /usr/src/app/FinanceService:/usr/local/bin:$PATH
+ENV DEBUG app:error
+COPY --from=build-env /usr/src/app/FinanceService /usr/src/app/FinanceService
+COPY --from=build-env /usr/src/app/KeyVault /usr/src/app/KeyVault
+COPY --from=build-env /usr/src/app/CryptoWrapper /usr/src/app/CryptoWrapper
 
 
 CMD ["npm","start"]

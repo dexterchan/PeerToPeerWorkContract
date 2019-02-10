@@ -1,1 +1,1 @@
-docker run -it -e PORT=8888 --rm -p 8888:8888 p2pworkcontract/financeservice
+docker run -it -e PORT=8001 --rm -p 8001:8001 p2pworkcontract/financeservice
