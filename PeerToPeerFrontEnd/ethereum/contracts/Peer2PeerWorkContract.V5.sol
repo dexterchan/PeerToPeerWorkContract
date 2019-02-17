@@ -13,9 +13,14 @@ contract Peer2PeerProjectDashBoard{
     mapping (address=>uint) public memberMap;
     mapping (address=>uint) public postProcessedMap;
     
+    //Events
+    event Created(address _contractAddress, address _from);
+    
     constructor() public{
         myManager=msg.sender;
+        emit Created(address(this), myManager);
     }
+    
     function createProject(string memory _task_des, uint _reward,int _minCredit, string memory _duration) public returns(Peer2PeerProject){
         require( memberMap[msg.sender]>0,"Only member can create project");
         Peer2PeerProject  newProject=new Peer2PeerProject(this,msg.sender,_task_des, _reward, _minCredit,   _duration);
