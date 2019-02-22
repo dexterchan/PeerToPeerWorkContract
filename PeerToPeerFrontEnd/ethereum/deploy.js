@@ -23,7 +23,7 @@ const deploy = async ()=>{
     const factory =new web3.eth.Contract(compiledFactoryABI);
     const result=await factory
         .deploy({data:"0x"+compliedFactoryEVM.bytecode.object})
-        .send( {gas:6181731, from: accounts[0]}); //a bug on Throffle wallet with gas parameter
+        .send( {gas:6381731, from: accounts[0]}); //a bug on Throffle wallet with gas parameter
     
     console.log("Contract deployed to ", result.options.address);   
     
