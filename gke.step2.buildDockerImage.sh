@@ -1,4 +1,4 @@
-export PROJECT_ID=peer2peerworkcontract
+export PROJECT_ID=peer2peerworkcontract-234006
 export CLUSTERNAME=peer2peerworkcontractcluster
 
 
