@@ -16,7 +16,7 @@ spec:
       containers:
       - name: peer2peerworkcontractcluster
         # Replace [GCLOUD_PROJECT] with your project ID.
-        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-financeservice:v4
+        image: gcr.io/peer2peerworkcontract-234006/peer2peerworkcontractcluster-financeservice:v4
         #livenessProbe:
         #  httpGet:
         #    path: /healthz
@@ -61,7 +61,7 @@ spec:
       containers:
       - name: peer2peerworkcontractcluster
         # Replace [GCLOUD_PROJECT] with your project ID.
-        image: gcr.io/peer2peerworkcontract/peer2peerworkcontractcluster-peer2peerfrontend:v4.2
+        image: gcr.io/peer2peerworkcontract-234006/peer2peerworkcontractcluster-peer2peerfrontend:v4.2
         resources:
           requests:
             memory: "100Mi"
