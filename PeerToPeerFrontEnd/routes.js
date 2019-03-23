@@ -9,6 +9,6 @@ routes
     .add("/workcontract/:address/finance/new","/projects/finance/new")
     .add("/workcontract/:address/finance/payment","/projects/finance/makePayment")
     .add("/workcontract/:address/getEcashOrder","/projects/finance/getEcashOrder")
-    .add("/workcontract/:address/hackGetECashOrder","/projects/finance/hackGetECashOrder");
+    .add("/workcontract/:address/hack","/projects/finance/hackGetECashOrder");
 
 module.exports=routes;

@@ -7,7 +7,7 @@ import { Link, Router } from "../../../routes";
 const myconfig = require("../../../config/SystemSetting");
 
 const debug = require("debug")("app:DEBUG");
-import { Dropdown,Message, TextArea, Button, Grid, Form } from "semantic-ui-react";
+import { Dropdown,Message, TextArea, Button, Grid, Form,Label } from "semantic-ui-react";
 
 class HackGetECashOrder extends Component {
   hirerhiree_list = [
@@ -109,6 +109,18 @@ class HackGetECashOrder extends Component {
   render() {
     return (
       <Layout user={this.state.user}>
+      <Label>
+    Note 1
+In response to Europe Union - General Data Protection Regulation (GDPR), <br/>
+use hashed ID to reference any personel <br/>
+
+Note 2 <br/> From NIST 
+Report on Post-Quantum Cryptography <br/>
+<a>https://csrc.nist.gov/publications/detail/nistir/8105/final</a> <br/>
+Under threat of quantum computing,<br/>
+we should not store asymetric encrypted cipher inside public blockchain<br/>
+Instead, symmetric encrypted cipher or hash are still acceptable.
+  </Label>
         <h3>Get EcashOrder</h3>
         <Grid divided="vertically">
           <Grid.Row columns={2}>

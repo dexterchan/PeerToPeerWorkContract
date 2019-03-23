@@ -1,4 +1,4 @@
-gcloud compute --project=peer2peerworkcontract-234006 addresses create web-static-ip --global --network-tier=PREMIUM
+gcloud compute --project=peer2peer addresses create web-static-ip --global --network-tier=PREMIUM
 kubectl create -f deployment.yaml
 
 kubectl create -f Service.yaml

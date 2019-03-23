@@ -1,6 +1,6 @@
-export PROJECT_ID=peer2peerworkcontract-234006
+export PROJECT_ID=peer2peer
 export CLUSTERNAME=peer2peerworkcontractcluster
-
+export ZONE=us-central1-c
 
 export SERVICE=financeservice
 DOCKER_IMAGE_NAME=gcr.io/$PROJECT_ID/$CLUSTERNAME-$SERVICE:v4
