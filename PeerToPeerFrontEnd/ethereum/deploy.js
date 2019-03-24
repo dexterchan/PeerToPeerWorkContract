@@ -38,12 +38,12 @@ const deploy = async ()=>{
         const memembersPromise = await Promise.all(
             Array(parseInt(userList.length))
               .fill()
-              .map((element, index) => {
-                //console.log(userList[index]," begin");
-                factoryContract.methods.addMember(accounts[index],userList[index],minCredit).send(
+              .map(async (element, index) => {
+                console.log(userList[index]," begin");
+                await factoryContract.methods.addMember(accounts[index],userList[index],minCredit).send(
                     { from: mgr, gas:526747 }
                 );
-                //console.log(userList[index]," done");
+                console.log(userList[index]," done");
               })
           );
     

@@ -59,9 +59,7 @@ contract Peer2PeerProjectDashBoard{
     
     function getMemberName(address m) public view returns (string memory){
         uint inx = getMember(m);
-        if(inx==0){
-            return " ";
-        }
+        
         Member memory m = memberList[inx];
         
         return m.name;
@@ -69,9 +67,7 @@ contract Peer2PeerProjectDashBoard{
     
     function getMemberCredit(address m) public view returns (int ){
         uint inx =getMember(m);
-        if(inx==0){
-            return 0;
-        }
+        
         Member memory m = memberList[inx];
         
         return m.credit;
