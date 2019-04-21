@@ -5,10 +5,10 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 8888
-    #nodePort: 30390
-    protocol: TCP
-    targetPort: 8888
+    - port: 8888
+      #nodePort: 30390
+      protocol: TCP
+      targetPort: 8888
   selector:
     app: financeservice
 ---
@@ -19,9 +19,23 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 8080
-    #nodePort: 30390
-    protocol: TCP
-    targetPort: 8080
+    - port: 8080
+      #nodePort: 30390
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: peer2peerfrontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customerservice-service
+spec:
+  type: NodePort
+  ports:
+    - port: 9000
+      #nodePort: 30390
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: customerservice

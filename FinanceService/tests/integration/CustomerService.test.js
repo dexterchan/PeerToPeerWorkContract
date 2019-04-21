@@ -5,13 +5,13 @@ describe("/api/customerservice", () => {
 
   const exec = async () => {
     return await request(server)
-      .get("/api/customerservice")
+      .get("/api/ecashorder/customerservice")
       //.set("x-auth-token",token)
       .send();
   };
   const exec_id = async id => {
     return await request(server)
-      .get(`/api/customerservice/${id}`)
+      .get(`/api/ecashorder/customerservice/${id}`)
       //.set("x-auth-token",token)
       .send();
   };
@@ -31,10 +31,11 @@ describe("/api/customerservice", () => {
   it("should work with id!", async () => {
     const name = "ironman";
     const res = await exec_id(name);
-    //console.log(res);
+    //console.log(res.status);
     const retObj = res.body;
-    expect(res.status).toBe(200);
     //console.log(retObj);
+    expect(res.status).toBe(200);
+
     //expect(res.).toBe("customer OK");
     expect(retObj).toHaveProperty("id");
     expect(retObj["id"]).toBe(name);

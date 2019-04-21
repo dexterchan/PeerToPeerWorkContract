@@ -1,0 +1,24 @@
+FROM node:10.15.0-stretch-slim as build-env
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/CustomerService
+
+ENV PATH /usr/src/app/CustomerService:/usr/local/bin:$PATH
+
+RUN cd /usr/src/app
+RUN mkdir -p /usr/src/app/CustomerService
+
+COPY CustomerService /usr/src/app/CustomerService
+RUN rm -Rf /usr/src/app/CustomerService/node_modules/
+RUN rm -f /usr/src/app/CustomerService/package-lock.json
+RUN npm install
+
+
+FROM node:10.15.0-stretch-slim 
+RUN mkdir -p /usr/src/app/CustomerService
+WORKDIR /usr/src/app/CustomerService
+ENV PATH /usr/src/app/CustomerService:/usr/local/bin:$PATH
+COPY --from=build-env /usr/src/app/CustomerService /usr/src/app/CustomerService
+
+
+CMD ["npm","start"]

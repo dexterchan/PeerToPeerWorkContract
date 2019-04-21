@@ -11,7 +11,7 @@ module.exports = app => {
   app.use(error);
   app.use("/api/ecashorder", eCashOrder_router);
   app.use("/api/auth", auth);
-  app.use("/api/customerservice", customer);
+  app.use("/api/ecashorder/customerservice", customer);
 
   app.get("/", (req, res) => {
     res.send("ok");

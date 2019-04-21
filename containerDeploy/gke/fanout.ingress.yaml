@@ -7,13 +7,17 @@ metadata:
 
 spec:
   rules:
-  - http:
-      paths:
-      - path: /api/*
-        backend:
-          serviceName: financeservice-service
-          servicePort: 8888
-      - path: /*
-        backend:
-          serviceName: peer2peerfrontend-service
-          servicePort: 8080
+    - http:
+        paths:
+          - path: /api/ecashorder/*
+            backend:
+              serviceName: financeservice-service
+              servicePort: 8888
+          - path: /api/customer/*
+            backend:
+              serviceName: customerservice-service
+              servicePort: 9000
+          - path: /*
+            backend:
+              serviceName: peer2peerfrontend-service
+              servicePort: 8080

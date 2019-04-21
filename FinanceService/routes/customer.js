@@ -11,12 +11,23 @@ router.get("/:id", async (req, res) => {
   const URL = `http://${hostnameport}/${id}`;
   DEBUG(hostnameport);
   DEBUG(URL);
-  const res_r = await axios.get(URL);
-  DEBUG(res_r.data);
-  if (res_r.status == 200) {
-    res.status(200).send(res_r.data);
-  } else {
-    res.status(400).send("failed to get:" + id);
+  try {
+    const res_r = await axios.get(URL);
+    /*const res_r = {
+      id: "dummy",
+      data: { url: URL, id: id },
+      status: 200
+    };*/
+
+    if (res_r.status === 200) {
+      //console.log(res_r.data);
+      res.status(200).send(res_r.data);
+    } else {
+      res.status(400).send("failed to get:" + id);
+    }
+  } catch (ex) {
+    const errmsg = `Failed to retrieve ${URL}:(${ex.message})`;
+    res.status(404).send(errmsg);
   }
 });
 module.exports = router;
