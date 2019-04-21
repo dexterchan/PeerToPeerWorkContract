@@ -1,11 +1,10 @@
-const express=require("express");
-const app=express();
+const express = require("express");
+const app = express();
 require("./startup/logging")();
 require("./startup/config");
 const systemLogger = require("debug")("app:sys");
 require("./startup/routes")(app);
 require("./startup/prod");
-
 
 /*
 if (process.env.NODE_ENV !== "production"){
@@ -17,10 +16,10 @@ if (process.env.NODE_ENV !== "production"){
   
 }  */
 
-
-
-
 //PORT
-const port=process.env.PORT || 8001
+const port = process.env.PORT || 8001;
 systemLogger("Started app");
-app.listen(port,()=>console.log(`Listening on port: ${port}...`));
+const server = app.listen(port, () =>
+  console.log(`Listening on port: ${port}...`)
+);
+module.exports = server;
