@@ -11,6 +11,6 @@
   "dependencies": {
     "debug": "^4.1.0",
     "mocha": "^5.2.0",
-    "underscore": "~1.9.1"
+    "underscore": "~1.12.1"
   }
 }
